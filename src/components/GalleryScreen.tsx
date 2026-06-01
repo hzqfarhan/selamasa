@@ -3,6 +3,7 @@ import React from 'react'
 import { Memory } from '@/types'
 import BottomNav from './BottomNav'
 import FallingLeaves from './FallingLeaves'
+import VoicePlayer from './VoicePlayer'
 
 interface GalleryProps {
   slug: string
@@ -129,11 +130,8 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
                 <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '9px', fontWeight: '600', color: 'var(--gold)', letterSpacing: '0.1em' }}>AUDIO GUESTBOOK</div>
               </div>
               {/* Waveform player */}
-              <div style={{ padding: '12px 16px 14px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(145deg, var(--gold), #1f4a7c)', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5V19L19 12L8 5Z" /></svg>
-                </div>
-                <audio src={m.fileUrl ?? undefined} controls style={{ flex: 1, height: '32px' }} />
+              <div style={{ padding: '0 8px 8px' }}>
+                <VoicePlayer src={m.fileUrl ?? ''} />
               </div>
             </div>
           ))}
