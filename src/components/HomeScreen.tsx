@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import BottomNav from './BottomNav'
+import FallingLeaves from './FallingLeaves'
 
 interface HomeProps {
   onNavChange: (tab: 'home' | 'album' | 'voice' | 'profile') => void
@@ -13,8 +14,9 @@ interface HomeProps {
 
 export default function HomeScreen({ onNavChange, onCaptureClick, onViewAlbum, onVoiceMemory, onWriteNote, coupleName }: HomeProps) {
   return (
-    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', paddingBottom: '90px' }}>
-      <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px 20px' }}>
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', paddingBottom: '90px', position: 'relative' }}>
+      <FallingLeaves />
+      <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px 20px', position: 'relative', zIndex: 2 }}>
         
         <div style={{ background: '#0e1522', borderRadius: '35px', padding: '30px 20px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}

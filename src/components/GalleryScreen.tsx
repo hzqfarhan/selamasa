@@ -2,6 +2,7 @@
 import React from 'react'
 import { Memory } from '@/types'
 import BottomNav from './BottomNav'
+import FallingLeaves from './FallingLeaves'
 
 interface GalleryProps {
   slug: string
@@ -30,7 +31,9 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
   const tabs = ['all', 'photos', 'voice', 'videos', 'notes']
 
   return (
-    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', display: 'flex', flexDirection: 'column', paddingBottom: 'calc(90px + var(--safe-bot))' }}>
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', display: 'flex', flexDirection: 'column', paddingBottom: 'calc(90px + var(--safe-bot))', position: 'relative' }}>
+      <FallingLeaves />
+      <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column' }}>
 
       {/* Sticky Header */}
       <div style={{ position: 'sticky', top: 0, zIndex: 50, padding: 'max(env(safe-area-inset-top,14px),14px) 20px 10px', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(14px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--gold-border)' }}>
@@ -172,6 +175,7 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
         </div>
       )}
 
+      </div>
       <BottomNav activeTab="album" onTabChange={onNavChange} onCaptureClick={onCaptureClick} />
     </div>
   )

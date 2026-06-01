@@ -35,7 +35,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         })}
       </div>
       
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center', alignItems: 'center', width: '100%', padding: '0 20px', position: 'relative', zIndex: 5 }}>
         <h1 className="splash-writing-text">Sela Masa</h1>
         <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '11px', letterSpacing: '0.15em', color: 'var(--gold)', textTransform: 'uppercase', marginTop: '8px', textShadow: '0 1px 0 #fff, 0px 2px 4px rgba(255,255,255,0.8)' }}>
           Every Moment, Forever Cherished.

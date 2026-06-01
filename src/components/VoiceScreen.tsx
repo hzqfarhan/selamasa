@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useRef, useEffect } from 'react'
+import FallingLeaves from './FallingLeaves'
 
 interface VoiceProps {
   onClose: () => void
@@ -198,8 +199,9 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
   const isFormValid = audioBlob !== null && name.trim() !== ''
 
   return (
-    <div className="screen" style={{ background: 'linear-gradient(rgba(7, 10, 18, 0.88), rgba(7, 10, 18, 0.88)), url(/asset/bg.png) center/cover no-repeat', overflow: 'hidden' }}>
-      <div className="voice-page">
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', overflow: 'hidden', position: 'relative' }}>
+      <FallingLeaves />
+      <div className="voice-page" style={{ position: 'relative', zIndex: 2 }}>
         {/* Back navigation */}
         <button className="voice-back" onClick={onClose} type="button" aria-label="Go Back">
           ←

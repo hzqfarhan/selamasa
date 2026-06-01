@@ -126,21 +126,40 @@ button { cursor: pointer; }
 
 /* Animations */
 @keyframes writeReveal {
-  from { clip-path: inset(-20px 100% -20px -20px); opacity: 0; }
-  to { clip-path: inset(-20px -20px -20px -20px); opacity: 1; }
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    opacity: 0;
+  }
+  to {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+    opacity: 1;
+  }
 }
 
 .splash-writing-text {
   font-family: var(--font-great-vibes), cursive;
-  font-size: clamp(44px, 12vw, 58px);
+  font-size: clamp(42px, 12vw, 56px);
   color: #2f78c4;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  
+  /* Slide mask reveal to prevent all clipping */
+  -webkit-mask-image: linear-gradient(to right, #000 50%, transparent 50%);
+  mask-image: linear-gradient(to right, #000 50%, transparent 50%);
+  -webkit-mask-size: 200% 100%;
+  mask-size: 200% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+  
   animation: writeReveal 2.2s cubic-bezier(.4, 0, .2, 1) forwards;
   white-space: nowrap;
   text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0px 4px 12px rgba(74, 144, 226, 0.2);
-  line-height: 1.4;
+  line-height: 1.5;
   text-align: center;
-  padding: 10px 20px;
+  padding: 12px 20px;
+  overflow: visible;
+  max-width: 90vw;
 }
 
 @keyframes splashFall {

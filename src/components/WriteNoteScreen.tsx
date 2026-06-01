@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import FallingLeaves from './FallingLeaves'
 
 interface WriteNoteProps {
   coupleName: string
@@ -9,12 +10,14 @@ interface WriteNoteProps {
   onVoiceRedirect: () => void
 }
 
-export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend, onVoiceRedirect, onNavChange, onCaptureClick }: WriteNoteProps) {
+export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend, onVoiceRedirect }: WriteNoteProps) {
   const [message, setMessage] = useState('')
   const [name, setName] = useState(guestName || '')
 
   return (
-    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px' }}>
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px', position: 'relative' }}>
+      <FallingLeaves />
+      <div style={{ position: 'relative', zIndex: 2 }}>
       <button onClick={onClose} style={{ position: 'absolute', top: 'max(env(safe-area-inset-top, 20px), 20px)', left: '20px', width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(8px)' }}>✕</button>
 
       <div style={{ textAlign: 'center', marginTop: '40px' }}>
@@ -69,6 +72,7 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
       </div>
 
       <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '11px', color: 'var(--cream-sub)' }}>🔒 Your memory is safe with us</p>
+      </div>
     </div>
   )
 }
