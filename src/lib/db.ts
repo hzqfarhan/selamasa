@@ -121,3 +121,17 @@ export async function getMemoryCount(slug: string): Promise<number> {
   if (error) throw error
   return count ?? 0
 }
+
+export async function deleteMemory(memoryId: string): Promise<void> {
+  const { error } = await supabase.from('memories').delete().eq('id', memoryId)
+  if (error) throw error
+}
+
+export async function getAllMemories(): Promise<Memory[]> {
+  const { data, error } = await supabase
+    .from('memories')
+    .select('*')
+    .order('uploaded_at', { ascending: false })
+  if (error) throw error
+  return (data ?? []).map(normalizeMemory)
+}

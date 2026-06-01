@@ -36,3 +36,9 @@ function getPublicUrl(path: string): string {
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path)
   return data.publicUrl
 }
+
+export async function deleteStorageFile(fileUrl: string): Promise<void> {
+  const path = fileUrl.split('/storage/v1/object/public/memories/').pop()
+  if (!path) return
+  await supabase.storage.from(BUCKET).remove([path])
+}
