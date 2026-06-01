@@ -1,21 +1,22 @@
 -- ============================================================
 -- SelaMasa — Supabase SQL Schema
--- Run this entire script in Supabase > SQL Editor > New query
+-- ✅ IDEMPOTENT: Safe to run multiple times
+-- Run this in: Supabase > SQL Editor > New query
 -- ============================================================
 
 
 -- ─── 1. TABLES ───────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS events (
-  id               TEXT PRIMARY KEY,          -- slug, e.g. "mim-azhad-2026"
+  id               TEXT PRIMARY KEY,          -- slug, e.g. "nureen-nizam-2026"
   bride            TEXT NOT NULL,
   groom            TEXT NOT NULL,
   event_date       TIMESTAMPTZ,
   location         TEXT,
-  type             TEXT NOT NULL DEFAULT 'wedding',  -- 'wedding' | 'engagement'
+  type             TEXT NOT NULL DEFAULT 'wedding',
   cover_photo_url  TEXT,
   welcome_note     TEXT,
-  package          TEXT NOT NULL DEFAULT 'basic',    -- 'basic' | 'premium'
+  package          TEXT NOT NULL DEFAULT 'basic',
   features         JSONB NOT NULL DEFAULT '{"boomerang":false,"voice":false,"notes":false,"filters":false}',
   allowed_filters  TEXT[] DEFAULT ARRAY['none'],
   filter_text      JSONB DEFAULT '{"watermark":"","tagline":""}',
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS events (
 CREATE TABLE IF NOT EXISTS memories (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   event_id        TEXT NOT NULL REFERENCES events(id) ON DELETE CASCADE,
-  type            TEXT NOT NULL,               -- 'photo' | 'video' | 'boomerang' | 'voice' | 'message'
+  type            TEXT NOT NULL,
   guest_name      TEXT NOT NULL DEFAULT 'Guest',
   file_url        TEXT,
   caption         TEXT,
@@ -37,12 +38,10 @@ CREATE TABLE IF NOT EXISTS memories (
   uploaded_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Fast lookup: event + date descending (used by gallery queries)
 CREATE INDEX IF NOT EXISTS idx_memories_event_date ON memories(event_id, uploaded_at DESC);
 
 
 -- ─── 2. ATOMIC LIKE INCREMENT (RPC) ──────────────────────────────────────────
--- Called by likeMemory() in src/lib/db.ts
 
 CREATE OR REPLACE FUNCTION increment_likes(memory_id UUID)
 RETURNS VOID
@@ -54,30 +53,40 @@ $$;
 
 -- ─── 3. ROW LEVEL SECURITY ────────────────────────────────────────────────────
 
-ALTER TABLE events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE events   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE memories ENABLE ROW LEVEL SECURITY;
 
--- events: anyone can read, only authenticated users (admin) can write
-CREATE POLICY "Public read events"    ON events FOR SELECT USING (true);
-CREATE POLICY "Auth insert events"    ON events FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-CREATE POLICY "Auth update events"    ON events FOR UPDATE USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth delete events"    ON events FOR DELETE USING (auth.role() = 'authenticated');
+-- Drop ALL existing policies first (prevents "already exists" error)
+DROP POLICY IF EXISTS "Public read events"     ON events;
+DROP POLICY IF EXISTS "Auth insert events"     ON events;
+DROP POLICY IF EXISTS "Auth update events"     ON events;
+DROP POLICY IF EXISTS "Auth delete events"     ON events;
+DROP POLICY IF EXISTS "Public read memories"   ON memories;
+DROP POLICY IF EXISTS "Public insert memories" ON memories;
+DROP POLICY IF EXISTS "Public update likes"    ON memories;
 
--- memories: anyone can read and insert (guests upload), auth needed for update (likes via RPC bypasses this)
+-- Recreate policies
+CREATE POLICY "Public read events"     ON events FOR SELECT USING (true);
+CREATE POLICY "Auth insert events"     ON events FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Auth update events"     ON events FOR UPDATE USING (auth.role() = 'authenticated');
+CREATE POLICY "Auth delete events"     ON events FOR DELETE USING (auth.role() = 'authenticated');
+
 CREATE POLICY "Public read memories"   ON memories FOR SELECT USING (true);
 CREATE POLICY "Public insert memories" ON memories FOR INSERT WITH CHECK (true);
 CREATE POLICY "Public update likes"    ON memories FOR UPDATE USING (true);
 
 
 -- ─── 4. STORAGE BUCKET ────────────────────────────────────────────────────────
--- You can also create this in: Supabase Dashboard > Storage > New Bucket
--- Name: "memories", Public: ON
 
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('memories', 'memories', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Storage policies
+-- Drop storage policies before recreating
+DROP POLICY IF EXISTS "Public upload to memories" ON storage.objects;
+DROP POLICY IF EXISTS "Public read from memories" ON storage.objects;
+DROP POLICY IF EXISTS "Auth delete from memories" ON storage.objects;
+
 CREATE POLICY "Public upload to memories"
   ON storage.objects FOR INSERT
   WITH CHECK (bucket_id = 'memories');
@@ -91,7 +100,7 @@ CREATE POLICY "Auth delete from memories"
   USING (bucket_id = 'memories' AND auth.role() = 'authenticated');
 
 
--- ─── 5. SAMPLE EVENT (optional, for testing) ─────────────────────────────────
+-- ─── 5. SAMPLE EVENT ─────────────────────────────────────────────────────────
 
 INSERT INTO events (id, bride, groom, event_date, location, type, package, features, allowed_filters, welcome_note)
 VALUES (
@@ -106,4 +115,13 @@ VALUES (
   ARRAY['none','floral','gold','vintage','romantic'],
   'Welcome to our special day! Capture your memories with us.'
 )
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+  bride           = EXCLUDED.bride,
+  groom           = EXCLUDED.groom,
+  event_date      = EXCLUDED.event_date,
+  location        = EXCLUDED.location,
+  type            = EXCLUDED.type,
+  package         = EXCLUDED.package,
+  features        = EXCLUDED.features,
+  allowed_filters = EXCLUDED.allowed_filters,
+  welcome_note    = EXCLUDED.welcome_note;

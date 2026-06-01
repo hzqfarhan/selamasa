@@ -23,11 +23,12 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
 
         {/* Top Brand Bar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '4px', animation: mounted ? 'cinReveal 0.7s 0s both' : 'none' }}>
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'linear-gradient(145deg,#17110b,#2a2117)', display: 'grid', placeItems: 'center', border: '1px solid rgba(198,162,84,0.4)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#c6a254" />
-            </svg>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/asset/selamasa.png"
+            alt="Sela Masa Logo"
+            style={{ width: '44px', height: '44px', objectFit: 'contain', borderRadius: '12px' }}
+          />
           <div>
             <div style={{ fontFamily: 'var(--font-poppins)', fontWeight: '700', fontSize: '14px', letterSpacing: '0.2em', color: '#17110b' }}>SELA MASA</div>
             <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '9px', letterSpacing: '0.15em', color: 'var(--cream-sub)' }}>ENGAGEMENT MEMORY</div>

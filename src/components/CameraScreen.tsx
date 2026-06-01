@@ -215,7 +215,7 @@ export default function CameraScreen({
         </button>
 
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '11px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.6)' }}>Arkibjanji</div>
+          <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '11px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.6)' }}>Sela Masa</div>
           <div style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '20px', color: '#fff', lineHeight: 1.1 }}>{coupleName}</div>
           <div style={{ marginTop: '4px', display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.12)', borderRadius: '999px', padding: '2px 10px' }}>
             <span style={{ color: 'var(--gold)', fontSize: '8px' }}>P</span>

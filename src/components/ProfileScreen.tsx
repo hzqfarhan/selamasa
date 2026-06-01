@@ -56,7 +56,7 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
         </div>
 
         <p style={{ textAlign: 'center', marginTop: '40px', fontFamily: 'var(--font-playfair)', fontStyle: 'italic', color: 'var(--gold)' }}>
-          Every promise deserves an archive ♡
+          Every moment, forever cherished ♡
         </p>
 
       </div>

@@ -30,9 +30,12 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
       </div>
       
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{ width: '80px', height: '80px', background: 'var(--gold)', borderRadius: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
-          <span style={{ fontFamily: 'var(--font-playfair)', fontSize: '32px', color: '#fff', fontWeight: 'bold' }}>SM</span>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/asset/selamasa.png"
+          alt="Sela Masa"
+          style={{ width: '90px', height: '90px', objectFit: 'contain', marginBottom: '20px' }}
+        />
         <h1 style={{ fontFamily: 'var(--font-playfair)', fontSize: '43px', fontWeight: 'bold', color: 'var(--bg)' }}>SELA MASA</h1>
         <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '11px', letterSpacing: '0.15em', color: 'var(--gold)', textTransform: 'uppercase', marginTop: '8px' }}>
           Every Moment, Forever Cherished.

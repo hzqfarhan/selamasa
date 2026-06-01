@@ -38,7 +38,7 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#5f4b35" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-poppins)', fontWeight: '700', fontSize: '13px', letterSpacing: '0.2em', color: '#17110b' }}>ARKIB JANJI</div>
+          <div style={{ fontFamily: 'var(--font-poppins)', fontWeight: '700', fontSize: '13px', letterSpacing: '0.2em', color: '#17110b' }}>SELA MASA</div>
           <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '9px', letterSpacing: '0.12em', color: 'var(--gold)' }}>CAPTURE. CHERISH. FOREVER.</div>
         </div>
         <button style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(255,255,255,0.8)', border: '1px solid var(--gold-border)', display: 'grid', placeItems: 'center' }}>
