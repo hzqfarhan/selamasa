@@ -7,7 +7,7 @@ interface BottomNavProps {
   onCaptureClick: () => void
 }
 
-const inactiveColor = '#e8d5b5'
+const inactiveColor = '#5f4b35'
 
 export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: BottomNavProps) {
   const active = 'var(--gold)'
@@ -21,11 +21,11 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
       width: 'calc(100% - 32px)',
       maxWidth: '390px',
       height: '66px',
-      background: 'rgba(14, 21, 34, 0.75)',
+      background: 'rgba(255, 255, 255, 0.65)',
       backdropFilter: 'blur(20px)',
       borderRadius: '999px',
       border: '1px solid var(--gold-border)',
-      boxShadow: '0 12px 36px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+      boxShadow: '0 12px 36px rgba(42, 68, 95, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
