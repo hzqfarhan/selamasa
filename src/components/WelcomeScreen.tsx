@@ -9,8 +9,8 @@ interface WelcomeProps {
 }
 
 const COUPLE = 'Nureen & Nizam'
-const DATE = '31 . 05 . 2026'
-const LOCATION = 'TAMPIN, N9'
+const DATE = '07 . 06 . 2026'
+const LOCATION = 'PARIT HJ ALI, BP'
 const EVENT_TYPE = 'Hari Lamaran (Sarong cincin)'
 
 export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemory, onWriteNote }: WelcomeProps) {
