@@ -15,7 +15,18 @@ export async function POST(req: Request) {
 
     const uuid = crypto.randomUUID()
     const folder = type === 'voice' ? 'voice' : 'videos'
-    const url = await uploadBlob(`events/${slug}/${folder}/${uuid}.webm`, video, video.type)
+
+    // Determine MIME type and file extension dynamically
+    const mime = video.type || (type === 'voice' ? 'audio/webm' : 'video/webm')
+    let ext = 'webm'
+    if (mime.includes('mp4')) ext = 'mp4'
+    else if (mime.includes('m4a')) ext = 'm4a'
+    else if (mime.includes('aac')) ext = 'aac'
+    else if (mime.includes('wav')) ext = 'wav'
+    else if (mime.includes('ogg')) ext = 'ogg'
+    else if (mime.includes('mov')) ext = 'mov'
+
+    const url = await uploadBlob(`events/${slug}/${folder}/${uuid}.${ext}`, video, mime)
 
     await saveMemory(slug, {
       type: type || 'boomerang',

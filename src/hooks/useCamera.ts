@@ -159,15 +159,23 @@ export function useCamera() {
       const input = document.createElement('input')
       input.type = 'file'
       input.accept = 'image/*'
-      input.capture = '' // Don't force camera on mobile
+      input.style.display = 'none'
+      document.body.appendChild(input)
+
       input.onchange = (e: Event) => {
         const file = (e.target as HTMLInputElement).files?.[0]
+        document.body.removeChild(input)
         if (!file) return resolve(null)
         const reader = new FileReader()
         reader.onload = () => resolve({ dataUrl: reader.result as string, file })
         reader.readAsDataURL(file)
       }
-      input.oncancel = () => resolve(null)
+
+      input.oncancel = () => {
+        document.body.removeChild(input)
+        resolve(null)
+      }
+
       input.click()
     })
   }, [])

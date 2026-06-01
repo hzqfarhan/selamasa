@@ -12,67 +12,114 @@ export default function VoiceScreen({ onClose, onUpload, guestName }: VoiceProps
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [name, setName] = useState(guestName || '')
-  
+  const [micError, setMicError] = useState<string | null>(null)
+  const [recordingTime, setRecordingTime] = useState(0)
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const chunksRef = useRef<Blob[]>([])
   const analyserRef = useRef<AnalyserNode | null>(null)
+  const audioCtxRef = useRef<AudioContext | null>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [waveform, setWaveform] = useState<number[]>([])
 
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl)
+      if (timerRef.current) clearInterval(timerRef.current)
+      if (audioCtxRef.current) audioCtxRef.current.close().catch(() => {})
     }
   }, [previewUrl])
 
   const startRecording = async () => {
+    setMicError(null)
+    setAudioBlob(null)
+    setPreviewUrl(null)
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       const mr = new MediaRecorder(stream)
       chunksRef.current = []
-      
-      const audioCtx = new AudioContext()
-      const source = audioCtx.createMediaStreamSource(stream)
-      const analyser = audioCtx.createAnalyser()
-      analyser.fftSize = 64
-      source.connect(analyser)
-      analyserRef.current = analyser
 
-      const updateWaveform = () => {
-        if (!isRecording) return
-        const dataArray = new Uint8Array(analyser.frequencyBinCount)
-        analyser.getByteFrequencyData(dataArray)
-        const subset = Array.from(dataArray).slice(0, 16)
-        setWaveform(subset)
-        if (mr.state === 'recording') {
-          requestAnimationFrame(updateWaveform)
+      let audioCtx: AudioContext | null = null
+      try {
+        const AudioContextClass = (window as any).AudioContext || (window as any).webkitAudioContext
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass()
+          audioCtxRef.current = audioCtx
+        }
+      } catch (ctxErr) {
+        console.warn('AudioContext failed:', ctxErr)
+      }
+
+      if (audioCtx) {
+        try {
+          const source = audioCtx.createMediaStreamSource(stream)
+          const analyser = audioCtx.createAnalyser()
+          analyser.fftSize = 64
+          source.connect(analyser)
+          analyserRef.current = analyser
+
+          const updateWaveform = () => {
+            if (mr.state !== 'recording') return
+            const dataArray = new Uint8Array(analyser.frequencyBinCount)
+            analyser.getByteFrequencyData(dataArray)
+            const subset = Array.from(dataArray).slice(0, 16)
+            setWaveform(subset)
+            requestAnimationFrame(updateWaveform)
+          }
+
+          mr.onstart = () => {
+            requestAnimationFrame(updateWaveform)
+          }
+        } catch (analyserErr) {
+          console.warn('Waveform analysis failed:', analyserErr)
         }
       }
 
-      mr.ondataavailable = e => { if(e.data.size > 0) chunksRef.current.push(e.data) }
+      mr.ondataavailable = e => { if (e.data.size > 0) chunksRef.current.push(e.data) }
       mr.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' })
+        const mimeType = mr.mimeType || 'audio/webm'
+        const blob = new Blob(chunksRef.current, { type: mimeType })
         setAudioBlob(blob)
         setPreviewUrl(URL.createObjectURL(blob))
         stream.getTracks().forEach(t => t.stop())
-        audioCtx.close()
+        if (audioCtx) {
+          audioCtx.close().catch(() => {})
+        }
+        if (timerRef.current) {
+          clearInterval(timerRef.current)
+          timerRef.current = null
+        }
+        setIsRecording(false)
       }
 
       mr.start(100)
       mediaRecorderRef.current = mr
       setIsRecording(true)
-      setAudioBlob(null)
-      setPreviewUrl(null)
-      updateWaveform()
-    } catch (e) {
+      setRecordingTime(0)
+
+      timerRef.current = setInterval(() => {
+        setRecordingTime(t => t + 1)
+      }, 1000)
+    } catch (e: any) {
       console.error(e)
+      setMicError(
+        e.name === 'NotAllowedError'
+          ? 'Microphone permission denied. Please allow microphone access in your browser settings.'
+          : 'Microphone not available on this device.'
+      )
+      setIsRecording(false)
     }
   }
 
   const stopRecording = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
     if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
       mediaRecorderRef.current.stop()
-      setIsRecording(false)
     }
+    setIsRecording(false)
   }
 
   const handleSubmit = () => {
@@ -87,7 +134,19 @@ export default function VoiceScreen({ onClose, onUpload, guestName }: VoiceProps
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: '28px', color: 'var(--cream-text)', marginBottom: '8px' }}>Audio Guestbook</h2>
-        <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '14px', color: 'var(--cream-sub)', marginBottom: '40px' }}>Leave a voice message for the couple</p>
+        <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '14px', color: 'var(--cream-sub)', marginBottom: '30px' }}>Leave a voice message for the couple</p>
+
+        {micError && (
+          <p style={{ color: '#ff3b30', fontFamily: 'var(--font-dm-sans)', fontSize: '13px', textAlign: 'center', margin: '-10px 20px 20px', lineHeight: 1.5 }}>
+            ⚠️ {micError}
+          </p>
+        )}
+
+        {isRecording && (
+          <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '14px', color: '#ff3b30', fontWeight: 'bold', marginBottom: '10px', animation: 'recPulse 1s infinite' }}>
+            🔴 {Math.floor(recordingTime / 60)}:{(recordingTime % 60).toString().padStart(2, '0')}
+          </div>
+        )}
 
         <div style={{ height: '60px', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '40px' }}>
           {(isRecording ? waveform : new Array(16).fill(10)).map((val, i) => (

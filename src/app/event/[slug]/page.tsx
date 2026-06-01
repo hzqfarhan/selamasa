@@ -64,6 +64,7 @@ export default function EventPage() {
   }
 
   const handleUploadVoice = async (blob: Blob, name: string) => {
+    setGuestName(name)
     const fd = new FormData()
     fd.append('video', blob)
     fd.append('guest_name', name)
@@ -75,6 +76,7 @@ export default function EventPage() {
   }
 
   const handleSendNote = async (message: string, name: string) => {
+    setGuestName(name)
     const fd = new FormData()
     fd.append('guest_name', name)
     fd.append('message_text', message)
