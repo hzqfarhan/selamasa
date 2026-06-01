@@ -70,10 +70,10 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
         </div>
 
         {/* Couple Photo */}
-        <div style={{ borderRadius: '28px', overflow: 'hidden', marginBottom: '20px', aspectRatio: '3/4', background: 'linear-gradient(135deg, var(--cream-bg2), var(--cream-bg3))', position: 'relative', animation: mounted ? 'cinReveal 0.7s 0.4s both' : 'none', flexShrink: 0 }}>
+        <div style={{ borderRadius: '28px', overflow: 'hidden', marginBottom: '20px', aspectRatio: '1/1', background: 'linear-gradient(135deg, var(--cream-bg2), var(--cream-bg3))', position: 'relative', animation: mounted ? 'cinReveal 0.7s 0.4s both' : 'none', flexShrink: 0 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/couple.jpg"
+            src="/asset/front.jpg"
             alt={COUPLE}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
