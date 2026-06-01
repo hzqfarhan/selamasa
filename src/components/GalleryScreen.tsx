@@ -33,7 +33,6 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
   return (
     <div className="screen" style={{
     background: 'radial-gradient(circle at 50% 20%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.85) 45%, transparent 85%), radial-gradient(circle at 50% 85%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.7) 40%, transparent 80%), radial-gradient(circle at 90% 18%, rgba(74,144,226,0.25), transparent 45%), url(/asset/bg.png) center/cover no-repeat',
-    position: 'relative',
     paddingBottom: 'calc(90px + var(--safe-bot))'
   }}>
       <FallingLeaves />
