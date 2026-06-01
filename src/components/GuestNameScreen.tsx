@@ -25,7 +25,7 @@ export default function GuestNameScreen({ onConfirm, onBack }: { onConfirm: (nam
 
         <button 
           onClick={() => { if(name.trim()) onConfirm(name) }}
-          style={{ width: '100%', marginTop: '24px', padding: '14px', borderRadius: '999px', background: 'linear-gradient(135deg,#15120e,#28251d)', color: 'var(--gold)', fontFamily: 'var(--font-playfair)', fontWeight: 'bold', fontSize: '16px' }}
+          style={{ width: '100%', marginTop: '24px', padding: '14px', borderRadius: '999px', background: 'linear-gradient(135deg, #0e1217, #1d2228 58%, #0c0f12)', border: '1px solid rgba(119, 172, 220, 0.75)', color: '#fff', fontFamily: 'var(--font-playfair)', fontWeight: 'bold', fontSize: '16px' }}
         >
           Open Camera →
         </button>

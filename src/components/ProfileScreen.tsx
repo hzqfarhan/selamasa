@@ -7,7 +7,7 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
     <div className="screen" style={{ background: 'var(--cream-bg)', paddingBottom: '90px' }}>
       <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px 20px' }}>
         
-        <div style={{ background: 'linear-gradient(180deg, #1f140a, #0d0804)', borderRadius: '35px', padding: '30px 20px', color: '#fff' }}>
+        <div style={{ background: 'linear-gradient(180deg, #121b2b, #0e1522)', borderRadius: '35px', padding: '30px 20px', color: '#fff' }}>
           <div style={{ background: 'rgba(255,255,255,0.1)', display: 'inline-block', padding: '6px 12px', borderRadius: '999px', fontSize: '9px', fontFamily: 'var(--font-poppins)', letterSpacing: '0.1em' }}>
             ✦ DIGITAL WEDDING MEMORY SERVICE
           </div>
@@ -47,7 +47,7 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
         </div>
 
         <div style={{ marginTop: '32px' }}>
-          <a href="https://instagram.com/selamasa.my" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: '#000', color: '#fff', borderRadius: '16px', marginBottom: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
+          <a href="https://instagram.com/selamasa.my" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: 'linear-gradient(135deg, var(--gold), #1f4a7c)', color: '#fff', borderRadius: '16px', marginBottom: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
             Follow @SelaMasa.my
           </a>
           <a href="https://wa.me/60123456789" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: '#25D366', color: '#fff', borderRadius: '16px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>

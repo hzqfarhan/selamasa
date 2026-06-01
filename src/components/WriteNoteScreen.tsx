@@ -14,7 +14,7 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
   const [name, setName] = useState(guestName || '')
 
   return (
-    <div className="screen" style={{ background: 'linear-gradient(180deg,#f4f9ff 0%,#d5e9ff 100%)', padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px' }}>
+    <div className="screen" style={{ background: 'var(--cream-bg) url(/floral-bg.jpg) center/cover', padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px' }}>
       <button onClick={onClose} style={{ position: 'absolute', top: 'max(env(safe-area-inset-top, 20px), 20px)', left: '20px', width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(8px)' }}>✕</button>
 
       <div style={{ textAlign: 'center', marginTop: '40px' }}>
@@ -25,7 +25,7 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
       </div>
 
       <div className="glass-card" style={{ marginTop: '40px', borderRadius: '34px', padding: '30px 20px', position: 'relative' }}>
-        <div style={{ position: 'absolute', top: '-24px', left: '50%', transform: 'translateX(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--gold), #1e4e8c)', color: '#fff', display: 'grid', placeItems: 'center', fontSize: '24px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
+        <div style={{ position: 'absolute', top: '-24px', left: '50%', transform: 'translateX(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--gold), #1f4a7c)', color: '#fff', display: 'grid', placeItems: 'center', fontSize: '24px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
           ♡
         </div>
 
@@ -60,7 +60,7 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
 
         <p style={{ textAlign: 'center', fontSize: '10px', color: 'var(--cream-sub)', marginBottom: '24px' }}>Auto timestamp will be saved</p>
 
-        <button onClick={() => { if(message.trim() && name.trim()) onSend(message, name) }} style={{ width: '100%', padding: '16px', borderRadius: '999px', background: 'linear-gradient(135deg, var(--gold), #1e4e8c)', color: '#fff', fontFamily: 'var(--font-poppins)', fontWeight: 'bold', fontSize: '14px', marginBottom: '12px' }}>
+        <button onClick={() => { if(message.trim() && name.trim()) onSend(message, name) }} style={{ width: '100%', padding: '16px', borderRadius: '999px', background: 'linear-gradient(135deg, var(--gold), #1f4a7c)', color: '#fff', fontFamily: 'var(--font-poppins)', fontWeight: 'bold', fontSize: '14px', marginBottom: '12px' }}>
           Send Memory
         </button>
         <button onClick={onVoiceRedirect} style={{ width: '100%', padding: '16px', borderRadius: '999px', border: '1px solid var(--gold)', color: 'var(--gold)', fontFamily: 'var(--font-poppins)', fontWeight: 'bold', fontSize: '14px' }}>

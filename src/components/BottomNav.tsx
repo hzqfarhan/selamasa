@@ -8,17 +8,17 @@ interface BottomNavProps {
 }
 
 export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: BottomNavProps) {
-  const active = '#2f78c4'
-  const inactive = '#7da5cd'
+  const active = 'var(--gold)'
+  const inactive = 'var(--cream-sub)'
 
   return (
     <div style={{
       position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
       width: '100%', maxWidth: '430px',
       height: 'calc(74px + var(--safe-bot))',
-      background: 'rgba(244, 249, 255, 0.97)',
+      background: 'rgba(255,255,255,0.97)',
       backdropFilter: 'blur(20px)',
-      borderTop: '1px solid rgba(74, 144, 226, 0.18)',
+      borderTop: '1px solid var(--gold-border)',
       display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       paddingBottom: 'var(--safe-bot)', paddingTop: '4px',
       zIndex: 100,
@@ -27,7 +27,7 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
       {/* Home */}
       <button onClick={() => onTabChange('home')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px' }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z"
+          <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 21 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z"
             stroke={activeTab === 'home' ? active : inactive} strokeWidth="1.7" strokeLinejoin="round" fill="none" />
         </svg>
         <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'home' ? '600' : '400', color: activeTab === 'home' ? active : inactive }}>Home</span>
@@ -48,17 +48,17 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
       <button onClick={onCaptureClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', marginTop: '-28px' }}>
         <div style={{
           width: '64px', height: '64px', borderRadius: '50%',
-          background: 'linear-gradient(145deg,#101824,#05090e)',
-          border: '4px solid rgba(244, 249, 255, 0.97)',
+          background: 'linear-gradient(145deg, #121b2b, #070a12)',
+          border: '4px solid rgba(255,255,255,0.97)',
           boxShadow: '0 4px 16px rgba(0,0,0,0.28)',
           display: 'grid', placeItems: 'center',
         }}>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M23 19C23 19.55 22.78 20.05 22.41 20.41C22.05 20.78 21.55 21 21 21H3C2.45 21 1.95 20.78 1.59 20.41C1.22 20.05 1 19.55 1 19V8C1 7.45 1.22 6.95 1.59 6.59C1.95 6.22 2.45 6 3 6H7L9 3H15L17 6H21C22.1 6 23 6.9 23 8V19Z" stroke="#3a86d4" strokeWidth="1.7" strokeLinejoin="round" fill="none" />
-            <circle cx="12" cy="13" r="4" stroke="#3a86d4" strokeWidth="1.7" />
+            <path d="M23 19C23 19.55 22.78 20.05 22.41 20.41C22.05 20.78 21.55 21 21 21H3C2.45 21 1.95 20.78 1.59 20.41C1.22 20.05 1 19.55 1 19V8C1 7.45 1.22 6.95 1.59 6.59C1.95 6.22 2.45 6 3 6H7L9 3H15L17 6H21C22.1 6 23 6.9 23 8V19Z" stroke="var(--gold)" strokeWidth="1.7" strokeLinejoin="round" fill="none" />
+            <circle cx="12" cy="13" r="4" stroke="var(--gold)" strokeWidth="1.7" />
           </svg>
         </div>
-        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', color: '#4a6f94', fontWeight: '500' }}>Capture</span>
+        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', color: 'var(--cream-sub)', fontWeight: '500' }}>Capture</span>
       </button>
 
       {/* Voice */}

@@ -280,12 +280,12 @@ export default function CameraScreen({
                   <div style={{
                     width: '58px', height: '58px', borderRadius: '16px',
                     background: f === 'none'
-                      ? 'linear-gradient(145deg,#101824,#1a2432)'
+                      ? 'linear-gradient(145deg,#1a1408,#2e2416)'
                       : `url(/filters/thumbs/filter-${f}.jpg) center/cover`,
                     border: selectedFilter === f
                       ? '2.5px solid var(--gold)'
                       : '2px solid rgba(255,255,255,0.15)',
-                    boxShadow: selectedFilter === f ? '0 0 12px rgba(74,144,226,0.7)' : 'none',
+                    boxShadow: selectedFilter === f ? '0 0 12px rgba(198,162,84,0.7)' : 'none',
                     display: 'grid', placeItems: 'center',
                     transition: 'all 0.2s',
                     overflow: 'hidden',
