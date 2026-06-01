@@ -46,10 +46,15 @@ export default function AdminDashboard() {
       if (m.fileUrl || m.file_url) {
         await deleteStorageFile(m.fileUrl ?? m.file_url!)
       }
+    } catch (e) {
+      console.error('Storage delete error (non-fatal):', e)
+    }
+    try {
       await deleteMemory(m.id)
       setMemories(prev => prev.filter(x => x.id !== m.id))
     } catch (e) {
-      alert('Failed to delete')
+      console.error('DB delete error:', e)
+      alert('Failed to delete from database — check RLS policies')
     }
     setDeleting(null)
   }

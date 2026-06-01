@@ -24,11 +24,16 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
   const chunksRef = useRef<Blob[]>([])
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const analyserRef = useRef<AnalyserNode | null>(null)
+  const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl)
       if (timerRef.current) clearInterval(timerRef.current)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
   }, [previewUrl])
 
@@ -95,6 +100,15 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
         }
       })
 
+      // Set up audio analyser for live waveform
+      const audioCtx = new AudioContext()
+      const source = audioCtx.createMediaStreamSource(stream)
+      const analyser = audioCtx.createAnalyser()
+      analyser.fftSize = 128
+      source.connect(analyser)
+      analyserRef.current = analyser
+      sourceRef.current = source
+
       const mimeType = chooseMimeType()
       let mr: MediaRecorder
       try {
@@ -108,6 +122,8 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
       mr.ondataavailable = e => { if (e.data.size > 0) chunksRef.current.push(e.data) }
       mr.onstop = () => {
         stream.getTracks().forEach(t => t.stop())
+        if (rafRef.current) cancelAnimationFrame(rafRef.current)
+        audioCtx.close()
         if (!chunksRef.current.length) {
           setMicError('Recording is empty. Please try again.')
           return
@@ -129,6 +145,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
       mediaRecorderRef.current = mr
       setIsRecording(true)
       setRecordingTime(0)
+      drawWaveform()
 
       timerRef.current = setInterval(() => {
         setRecordingTime(t => {
@@ -148,6 +165,40 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
       )
       setIsRecording(false)
     }
+  }
+
+  const drawWaveform = () => {
+    const canvas = canvasRef.current
+    const analyser = analyserRef.current
+    if (!canvas || !analyser) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const bufferLength = analyser.frequencyBinCount
+    const dataArray = new Uint8Array(bufferLength)
+
+    const draw = () => {
+      rafRef.current = requestAnimationFrame(draw)
+      analyser.getByteFrequencyData(dataArray)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      const barCount = 34
+      const barWidth = canvas.width / barCount
+      const step = Math.floor(bufferLength / barCount)
+
+      for (let i = 0; i < barCount; i++) {
+        const value = dataArray[i * step] / 255
+        const barHeight = value * canvas.height * 0.9
+        const x = i * barWidth
+        const y = canvas.height - barHeight
+        const gradient = ctx.createLinearGradient(x, y, x, canvas.height)
+        gradient.addColorStop(0, 'rgba(47, 120, 196, 0.9)')
+        gradient.addColorStop(1, 'rgba(47, 120, 196, 0.25)')
+        ctx.fillStyle = gradient
+        ctx.fillRect(x + 1, y, barWidth - 2, barHeight)
+      }
+    }
+    draw()
   }
 
   const stopRecording = () => {
@@ -232,6 +283,11 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
                 {isRecording ? '■' : '🎙'}
               </button>
             </div>
+
+            {/* Live waveform during recording */}
+            {isRecording && (
+              <canvas ref={canvasRef} className="voice-waveform-canvas" width={280} height={80} />
+            )}
 
             <h1 className="voice-title">
               {audioBlob ? 'Ready to Send' : (isRecording ? 'Recording...' : 'Leave Your Voice')}

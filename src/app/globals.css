@@ -933,6 +933,16 @@ img, video { user-select: none; -webkit-touch-callout: none; }
   display: block !important;
 }
 
+/* Live recording waveform canvas */
+.voice-waveform-canvas {
+  width: 100%;
+  max-width: 280px;
+  height: 80px;
+  border-radius: 16px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
 @keyframes voicePulseIdle {
   0% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.24); transform: scale(1); }
   70% { box-shadow: 0 0 0 25px rgba(74, 144, 226, 0); transform: scale(1.03); }

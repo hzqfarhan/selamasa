@@ -38,7 +38,9 @@ function getPublicUrl(path: string): string {
 }
 
 export async function deleteStorageFile(fileUrl: string): Promise<void> {
+  if (!fileUrl || fileUrl.startsWith('blob:')) return
   const path = fileUrl.split('/storage/v1/object/public/memories/').pop()
   if (!path) return
-  await supabase.storage.from(BUCKET).remove([path])
+  const { error } = await supabase.storage.from(BUCKET).remove([path])
+  if (error) console.error('Storage delete error:', error)
 }
