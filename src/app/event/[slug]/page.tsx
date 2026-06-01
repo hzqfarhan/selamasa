@@ -10,18 +10,19 @@ import GalleryScreen from '@/components/GalleryScreen'
 import WriteNoteScreen from '@/components/WriteNoteScreen'
 import VoiceScreen from '@/components/VoiceScreen'
 import ProfileScreen from '@/components/ProfileScreen'
+import HomeScreen from '@/components/HomeScreen'
 import PhotoDetailModal from '@/components/PhotoDetailModal'
 import { useEvent } from '@/hooks/useEvent'
 import { useGallery } from '@/hooks/useGallery'
 
-type ScreenState = 'splash' | 'welcome' | 'guestname' | 'camera' | 'review' | 'gallery' | 'note' | 'voice' | 'profile'
+type ScreenState = 'splash' | 'welcome' | 'guestname' | 'camera' | 'review' | 'gallery' | 'note' | 'voice' | 'profile' | 'home'
 
 export default function EventPage() {
   const { slug } = useParams()
   const { eventConfig, loading } = useEvent(slug as string)
   const { memories, tab, changeTab, loadMemories, hasMore, addOptimisticLike } = useGallery(slug as string)
   
-  const [currentScreen, setCurrentScreen] = useState<ScreenState>('splash')
+  const [currentScreen, setCurrentScreen] = useState<ScreenState>('home')
   const [guestName, setGuestName] = useState('')
   const [capturedMedia, setCapturedMedia] = useState<{ url: string | null, blob: Blob | null, type: 'photo' | 'boomerang' }>({ url: null, blob: null, type: 'photo' })
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
@@ -97,15 +98,16 @@ export default function EventPage() {
 
   return (
     <>
-      {currentScreen === 'splash' && <SplashScreen onComplete={() => setCurrentScreen('welcome')} />}
+      {currentScreen === 'splash' && <SplashScreen onComplete={() => setCurrentScreen('home')} />}
       {currentScreen === 'welcome' && <WelcomeScreen onStartCapture={() => setCurrentScreen('guestname')} onViewAlbum={() => setCurrentScreen('gallery')} onVoiceMemory={() => setCurrentScreen('voice')} onWriteNote={() => setCurrentScreen('note')} />}
       {currentScreen === 'guestname' && <GuestNameScreen onConfirm={(name) => { setGuestName(name); setCurrentScreen('camera') }} onBack={() => setCurrentScreen('welcome')} />}
       {currentScreen === 'camera' && <CameraScreen coupleName={coupleName} guestName={guestName} allowedFilters={filters} onCapturePhoto={handleCapturePhoto} onCaptureBoomerang={handleCaptureBoomerang} onBack={() => setCurrentScreen('welcome')} />}
       {currentScreen === 'review' && <CaptureReviewScreen mediaUrl={capturedMedia.url} mediaBlob={capturedMedia.blob} type={capturedMedia.type} guestName={guestName} onRetake={() => setCurrentScreen('camera')} onShare={handleUploadReview} />}
       {currentScreen === 'gallery' && <GalleryScreen slug={slug as string} coupleName={coupleName} memories={memories} tab={tab} onChangeTab={changeTab} onLoadMore={() => loadMemories()} hasMore={hasMore} onLike={handleLike} onBack={() => setCurrentScreen('welcome')} onCaptureClick={() => guestName ? setCurrentScreen('camera') : setCurrentScreen('guestname')} onNavChange={(t) => setCurrentScreen(t as any)} onPhotoClick={setSelectedPhotoIndex} />}
-      {currentScreen === 'note' && <WriteNoteScreen coupleName={coupleName} guestName={guestName} onClose={() => setCurrentScreen('welcome')} onSend={handleSendNote} onVoiceRedirect={() => setCurrentScreen('voice')} />}
-      {currentScreen === 'voice' && <VoiceScreen coupleName={coupleName} guestName={guestName} onClose={() => setCurrentScreen('welcome')} onUpload={handleUploadVoice} />}
+      {currentScreen === 'note' && <WriteNoteScreen coupleName={coupleName} guestName={guestName} onClose={() => setCurrentScreen('welcome')} onSend={handleSendNote} onVoiceRedirect={() => setCurrentScreen('voice')} onNavChange={(t) => setCurrentScreen(t as any)} onCaptureClick={() => guestName ? setCurrentScreen('camera') : setCurrentScreen('guestname')} />}
+      {currentScreen === 'voice' && <VoiceScreen coupleName={coupleName} guestName={guestName} onClose={() => setCurrentScreen('welcome')} onUpload={handleUploadVoice} onNavChange={(t) => setCurrentScreen(t as any)} onCaptureClick={() => guestName ? setCurrentScreen('camera') : setCurrentScreen('guestname')} />}
       {currentScreen === 'profile' && <ProfileScreen onNavChange={(t: any) => setCurrentScreen(t)} onCaptureClick={() => guestName ? setCurrentScreen('camera') : setCurrentScreen('guestname')} />}
+      {currentScreen === 'home' && <HomeScreen onNavChange={(t) => setCurrentScreen(t as any)} onCaptureClick={() => guestName ? setCurrentScreen('camera') : setCurrentScreen('guestname')} onViewAlbum={() => setCurrentScreen('gallery')} onVoiceMemory={() => setCurrentScreen('voice')} onWriteNote={() => setCurrentScreen('note')} coupleName={coupleName} />}
 
       {selectedPhotoIndex !== null && (
         <PhotoDetailModal 

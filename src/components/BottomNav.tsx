@@ -7,9 +7,10 @@ interface BottomNavProps {
   onCaptureClick: () => void
 }
 
+const inactiveColor = '#e8d5b5'
+
 export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: BottomNavProps) {
   const active = 'var(--gold)'
-  const inactive = 'var(--cream-sub)'
 
   return (
     <div style={{
@@ -20,11 +21,11 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
       width: 'calc(100% - 32px)',
       maxWidth: '390px',
       height: '66px',
-      background: 'rgba(255, 255, 255, 0.88)',
+      background: 'rgba(14, 21, 34, 0.75)',
       backdropFilter: 'blur(20px)',
       borderRadius: '999px',
       border: '1px solid var(--gold-border)',
-      boxShadow: '0 12px 36px rgba(42, 68, 95, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+      boxShadow: '0 12px 36px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
@@ -32,23 +33,23 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
     }}>
 
       {/* Home */}
-      <button onClick={() => onTabChange('home')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px' }}>
+      <button onClick={() => onTabChange('home')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 21 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z"
-            stroke={activeTab === 'home' ? active : inactive} strokeWidth="1.7" strokeLinejoin="round" fill="none" />
+            stroke={activeTab === 'home' ? active : inactiveColor} strokeWidth="1.7" strokeLinejoin="round" fill="none" />
         </svg>
-        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'home' ? '600' : '400', color: activeTab === 'home' ? active : inactive }}>Home</span>
+        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'home' ? '600' : '400', color: activeTab === 'home' ? active : inactiveColor }}>Home</span>
       </button>
 
       {/* Album */}
-      <button onClick={() => onTabChange('album')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px' }}>
+      <button onClick={() => onTabChange('album')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <rect x="3" y="3" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactive} strokeWidth="1.7" />
-          <rect x="13" y="3" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactive} strokeWidth="1.7" />
-          <rect x="3" y="13" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactive} strokeWidth="1.7" />
-          <rect x="13" y="13" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactive} strokeWidth="1.7" />
+          <rect x="3" y="3" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactiveColor} strokeWidth="1.7" />
+          <rect x="13" y="3" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactiveColor} strokeWidth="1.7" />
+          <rect x="3" y="13" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactiveColor} strokeWidth="1.7" />
+          <rect x="13" y="13" width="8" height="8" rx="2" stroke={activeTab === 'album' ? active : inactiveColor} strokeWidth="1.7" />
         </svg>
-        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'album' ? '600' : '400', color: activeTab === 'album' ? active : inactive }}>Album</span>
+        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'album' ? '600' : '400', color: activeTab === 'album' ? active : inactiveColor }}>Album</span>
       </button>
 
       {/* Center Capture Button */}
@@ -72,23 +73,23 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
       </button>
 
       {/* Voice */}
-      <button onClick={() => onTabChange('voice')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px' }}>
+      <button onClick={() => onTabChange('voice')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <rect x="9" y="2" width="6" height="12" rx="3" stroke={activeTab === 'voice' ? active : inactive} strokeWidth="1.7" />
-          <path d="M5 10C5 14.42 8.13 18 12 18C15.87 18 19 14.42 19 10" stroke={activeTab === 'voice' ? active : inactive} strokeWidth="1.7" strokeLinecap="round" />
-          <line x1="12" y1="18" x2="12" y2="22" stroke={activeTab === 'voice' ? active : inactive} strokeWidth="1.7" strokeLinecap="round" />
-          <line x1="9" y1="22" x2="15" y2="22" stroke={activeTab === 'voice' ? active : inactive} strokeWidth="1.7" strokeLinecap="round" />
+          <rect x="9" y="2" width="6" height="12" rx="3" stroke={activeTab === 'voice' ? active : inactiveColor} strokeWidth="1.7" />
+          <path d="M5 10C5 14.42 8.13 18 12 18C15.87 18 19 14.42 19 10" stroke={activeTab === 'voice' ? active : inactiveColor} strokeWidth="1.7" strokeLinecap="round" />
+          <line x1="12" y1="18" x2="12" y2="22" stroke={activeTab === 'voice' ? active : inactiveColor} strokeWidth="1.7" strokeLinecap="round" />
+          <line x1="9" y1="22" x2="15" y2="22" stroke={activeTab === 'voice' ? active : inactiveColor} strokeWidth="1.7" strokeLinecap="round" />
         </svg>
-        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'voice' ? '600' : '400', color: activeTab === 'voice' ? active : inactive }}>Voice</span>
+        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'voice' ? '600' : '400', color: activeTab === 'voice' ? active : inactiveColor }}>Voice</span>
       </button>
 
       {/* Profile */}
-      <button onClick={() => onTabChange('profile')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px' }}>
+      <button onClick={() => onTabChange('profile')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', minWidth: '52px', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" stroke={activeTab === 'profile' ? active : inactive} strokeWidth="1.7" />
-          <path d="M4 20C4 17.33 7.58 15 12 15C16.42 15 20 17.33 20 20" stroke={activeTab === 'profile' ? active : inactive} strokeWidth="1.7" strokeLinecap="round" />
+          <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" stroke={activeTab === 'profile' ? active : inactiveColor} strokeWidth="1.7" />
+          <path d="M4 20C4 17.33 7.58 15 12 15C16.42 15 20 17.33 20 20" stroke={activeTab === 'profile' ? active : inactiveColor} strokeWidth="1.7" strokeLinecap="round" />
         </svg>
-        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'profile' ? '600' : '400', color: activeTab === 'profile' ? active : inactive }}>Profile</span>
+        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: activeTab === 'profile' ? '600' : '400', color: activeTab === 'profile' ? active : inactiveColor }}>Profile</span>
       </button>
     </div>
   )

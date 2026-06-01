@@ -9,7 +9,7 @@ interface WriteNoteProps {
   onVoiceRedirect: () => void
 }
 
-export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend, onVoiceRedirect }: WriteNoteProps) {
+export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend, onVoiceRedirect, onNavChange, onCaptureClick }: WriteNoteProps) {
   const [message, setMessage] = useState('')
   const [name, setName] = useState(guestName || '')
 
