@@ -377,12 +377,10 @@ export default function CameraScreen({
             <button
               onClick={flipCamera}
               title="Flip camera"
-              disabled={!hasFrontCamera}
               style={{
                 width: '48px', height: '48px', borderRadius: '50%',
                 background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(8px)',
                 display: 'grid', placeItems: 'center', border: '1px solid rgba(255,255,255,0.2)',
-                opacity: hasFrontCamera ? 1 : 0.3,
               }}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

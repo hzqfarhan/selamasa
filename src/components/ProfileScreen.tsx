@@ -11,8 +11,7 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
         
         <div style={{ background: '#fff', borderRadius: '35px', padding: '30px 20px', color: '#111', position: 'relative', overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/asset/front.jpg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 21, 34, 0.3) 0%, transparent 60%)' }} />
+          <img src="/asset/profbg.png" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} />
           
           <div style={{ position: 'relative', zIndex: 2 }}>
             <div style={{ background: 'rgba(0,0,0,0.06)', display: 'inline-block', padding: '6px 12px', borderRadius: '999px', fontSize: '9px', fontFamily: 'var(--font-poppins)', letterSpacing: '0.1em', color: '#555' }}>

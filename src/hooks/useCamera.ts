@@ -24,6 +24,16 @@ export function useCamera() {
     }).catch(() => {})
   }, [])
 
+  // Re-check cameras after stream starts (enumerateDevices may return empty before getUserMedia)
+  useEffect(() => {
+    if (!cameraReady) return
+    navigator.mediaDevices.enumerateDevices().then(devices => {
+      const videoDevices = devices.filter(d => d.kind === 'videoinput')
+      if (videoDevices.length > 1) setHasFrontCamera(true)
+      else setHasFrontCamera(true) // assume front camera exists on mobile
+    }).catch(() => setHasFrontCamera(true))
+  }, [cameraReady])
+
   // ── Start / restart camera ───────────────────────────────────────────────
   const startCamera = useCallback(async (mode: FacingMode) => {
     setCameraReady(false)
@@ -37,7 +47,7 @@ export function useCamera() {
 
     const constraints: MediaStreamConstraints = {
       video: {
-        facingMode: { ideal: mode },
+        facingMode: { exact: mode },
         width:  { ideal: 1920 },
         height: { ideal: 1080 },
       },
@@ -55,9 +65,12 @@ export function useCamera() {
       }
       setCameraReady(true)
     } catch (err: any) {
-      // Fallback — try any camera
+      // Fallback — try ideal (exact failed)
       try {
-        const fallback = await navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        const fallback = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: mode }, width: { ideal: 1920 }, height: { ideal: 1080 } },
+          audio: false,
+        })
         streamRef.current = fallback
         setFacingMode(mode)
         if (videoRef.current) {
@@ -66,11 +79,22 @@ export function useCamera() {
         }
         setCameraReady(true)
       } catch (err2: any) {
-        setCameraError(
-          err2.name === 'NotAllowedError'
-            ? 'Camera permission denied. Please allow camera access in your browser settings.'
-            : 'Camera not available on this device.'
-        )
+        // Last resort — any camera
+        try {
+          const last = await navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+          streamRef.current = last
+          if (videoRef.current) {
+            videoRef.current.srcObject = last
+            await videoRef.current.play().catch(() => {})
+          }
+          setCameraReady(true)
+        } catch (err3: any) {
+          setCameraError(
+            err3.name === 'NotAllowedError'
+              ? 'Camera permission denied. Please allow camera access in your browser settings.'
+              : 'Camera not available on this device.'
+          )
+        }
       }
     }
   }, [])
