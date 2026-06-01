@@ -34,9 +34,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         <img
           src="/asset/selamasa.png"
           alt="Sela Masa"
-          style={{ width: '90px', height: '90px', objectFit: 'contain', marginBottom: '20px' }}
+          style={{ width: '180px', height: '180px', objectFit: 'contain', marginBottom: '10px' }}
         />
-        <h1 style={{ fontFamily: 'var(--font-playfair)', fontSize: '43px', fontWeight: 'bold', color: 'var(--bg)' }}>SELA MASA</h1>
         <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '11px', letterSpacing: '0.15em', color: 'var(--gold)', textTransform: 'uppercase', marginTop: '8px' }}>
           Every Moment, Forever Cherished.
         </p>
