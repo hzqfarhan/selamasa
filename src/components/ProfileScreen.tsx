@@ -7,18 +7,24 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
     <div className="screen" style={{ background: 'var(--cream-bg)', paddingBottom: '90px' }}>
       <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px 20px' }}>
         
-        <div style={{ background: 'linear-gradient(180deg, #121b2b, #0e1522)', borderRadius: '35px', padding: '30px 20px', color: '#fff' }}>
-          <div style={{ background: 'rgba(255,255,255,0.1)', display: 'inline-block', padding: '6px 12px', borderRadius: '999px', fontSize: '9px', fontFamily: 'var(--font-poppins)', letterSpacing: '0.1em' }}>
-            ✦ DIGITAL WEDDING MEMORY SERVICE
-          </div>
-          <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '48px', color: 'var(--gold)', margin: '16px 0 8px' }}>SelaMasa</h1>
-          <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: 'var(--t2)', lineHeight: 1.5, marginBottom: '20px' }}>
-            Elevate your wedding experience with our premium digital guestbook and live album platform. Cherish every memory seamlessly.
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            <span style={{ border: '1px solid var(--gold-border)', borderRadius: '999px', padding: '6px 12px', fontSize: '10px', color: 'var(--gold)' }}>QR Wedding Album</span>
-            <span style={{ border: '1px solid var(--gold-border)', borderRadius: '999px', padding: '6px 12px', fontSize: '10px', color: 'var(--gold)' }}>Guest Memories</span>
-            <span style={{ border: '1px solid var(--gold-border)', borderRadius: '999px', padding: '6px 12px', fontSize: '10px', color: 'var(--gold)' }}>Mobile Friendly</span>
+        <div style={{ background: '#0e1522', borderRadius: '35px', padding: '30px 20px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/asset/front.jpg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 21, 34, 0.7) 0%, transparent 60%)' }} />
+          
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <div style={{ background: 'rgba(255,255,255,0.1)', display: 'inline-block', padding: '6px 12px', borderRadius: '999px', fontSize: '9px', fontFamily: 'var(--font-poppins)', letterSpacing: '0.1em' }}>
+              ✦ DIGITAL WEDDING MEMORY SERVICE
+            </div>
+            <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '48px', color: 'var(--gold)', margin: '16px 0 8px' }}>SelaMasa</h1>
+            <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: 'var(--t2)', lineHeight: 1.5, marginBottom: '20px' }}>
+              Elevate your wedding experience with our premium digital guestbook and live album platform. Cherish every memory seamlessly.
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              <span style={{ border: '1px solid var(--gold-border)', borderRadius: '999px', padding: '6px 12px', fontSize: '10px', color: 'var(--gold)' }}>QR Wedding Album</span>
+              <span style={{ border: '1px solid var(--gold-border)', borderRadius: '999px', padding: '6px 12px', fontSize: '10px', color: 'var(--gold)' }}>Guest Memories</span>
+              <span style={{ border: '1px solid var(--gold-border)', borderRadius: '999px', padding: '6px 12px', fontSize: '10px', color: 'var(--gold)' }}>Mobile Friendly</span>
+            </div>
           </div>
         </div>
 

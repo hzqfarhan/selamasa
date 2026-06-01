@@ -47,8 +47,10 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
       </div>
 
       {/* Hero Card */}
-      <div style={{ margin: '12px 16px', borderRadius: '28px', minHeight: '200px', background: 'linear-gradient(135deg, #121b2b, #0e1522)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14,21,34,0.7) 0%, transparent 60%)' }} />
+      <div style={{ margin: '12px 16px', borderRadius: '28px', minHeight: '200px', background: '#0e1522', position: 'relative', overflow: 'hidden' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/asset/front.jpg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 21, 34, 0.8) 0%, rgba(14, 21, 34, 0.45) 100%)' }} />
         <div style={{ position: 'absolute', inset: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <h2 style={{ color: '#fff', fontFamily: 'var(--font-playfair)', fontSize: '26px', fontWeight: '700', marginBottom: '2px' }}>{coupleName}</h2>
           <p style={{ fontFamily: 'var(--font-great-vibes)', color: 'var(--gold)', fontSize: '22px', marginBottom: '8px' }}>Engagement Memories</p>
