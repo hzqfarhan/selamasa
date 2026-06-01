@@ -31,9 +31,12 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
   const tabs = ['all', 'photos', 'voice', 'videos', 'notes']
 
   return (
-    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', display: 'flex', flexDirection: 'column', paddingBottom: 'calc(90px + var(--safe-bot))', position: 'relative' }}>
+    <div className="screen" style={{
+    background: 'radial-gradient(circle at 50% 20%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.85) 45%, transparent 85%), radial-gradient(circle at 50% 85%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.7) 40%, transparent 80%), radial-gradient(circle at 90% 18%, rgba(74,144,226,0.25), transparent 45%), url(/asset/bg.png) center/cover no-repeat',
+    position: 'relative',
+    paddingBottom: 'calc(90px + var(--safe-bot))'
+  }}>
       <FallingLeaves />
-      <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column' }}>
 
       {/* Sticky Header */}
       <div style={{ position: 'sticky', top: 0, zIndex: 50, padding: 'max(env(safe-area-inset-top,14px),14px) 20px 10px', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(14px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--gold-border)' }}>
@@ -175,7 +178,6 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
         </div>
       )}
 
-      </div>
       <BottomNav activeTab="album" onTabChange={onNavChange} onCaptureClick={onCaptureClick} />
     </div>
   )
