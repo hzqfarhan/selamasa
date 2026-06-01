@@ -9,68 +9,99 @@ interface WelcomeProps {
 }
 
 const COUPLE = 'Nureen & Nizam'
-const DATE = '01 . 06 . 2026'
-const LOCATION = 'Kuala Lumpur'
-const EVENT_TYPE = 'MAJLIS PERKAHWINAN'
+const DATE = '31 . 05 . 2026'
+const LOCATION = 'TAMPIN, N9'
+const EVENT_TYPE = 'HARI LAMARAN (SARONG CINCIN)'
 
 export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemory, onWriteNote }: WelcomeProps) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => { setMounted(true) }, [])
 
   return (
-    <div className="screen" style={{ background: 'linear-gradient(180deg, #fffdf9 0%, #fbf3e8 60%, #ede0ca 100%)', overflowY: 'auto' }}>
-      <div style={{ padding: 'max(env(safe-area-inset-top,14px),14px) 20px 20px', display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
+    <div className="screen" style={{
+      background: 'linear-gradient(180deg, #fffdf9 0%, #fbf3e8 60%, #ede0ca 100%)',
+      overflow: 'hidden',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      <div style={{
+        padding: 'max(env(safe-area-inset-top,14px),14px) 16px 0',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        justifyContent: 'space-between',
+        overflow: 'hidden'
+      }}>
 
-        {/* Top Brand Bar */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '4px', animation: mounted ? 'cinReveal 0.7s 0s both' : 'none' }}>
+        {/* Top Brand Pill Badge */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+          background: '#fff', border: '1.2px solid rgba(198,162,84,0.3)', borderRadius: '999px',
+          padding: '6px 18px', alignSelf: 'center', marginBottom: '4px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
+          animation: mounted ? 'cinReveal 0.7s 0s both' : 'none',
+          flexShrink: 0
+        }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/asset/selamasa.png"
             alt="Sela Masa Logo"
-            style={{ width: '44px', height: '44px', objectFit: 'contain', borderRadius: '12px' }}
+            style={{ width: '28px', height: '28px', objectFit: 'contain' }}
           />
-          <div>
-            <div style={{ fontFamily: 'var(--font-poppins)', fontWeight: '700', fontSize: '14px', letterSpacing: '0.2em', color: '#17110b' }}>SELA MASA</div>
-            <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '9px', letterSpacing: '0.15em', color: 'var(--cream-sub)' }}>ENGAGEMENT MEMORY</div>
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontFamily: 'var(--font-poppins)', fontWeight: '700', fontSize: '11px', letterSpacing: '0.12em', color: '#17110b', lineHeight: 1.1 }}>SELA MASA</div>
+            <div style={{ fontFamily: 'var(--font-poppins)', fontSize: '7.5px', letterSpacing: '0.08em', color: 'var(--cream-sub)', lineHeight: 1.1 }}>ENGAGEMENT MEMORY</div>
           </div>
-        </div>
-
-        {/* Divider */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '12px 0', animation: mounted ? 'cinReveal 0.7s 0.08s both' : 'none' }}>
-          <div style={{ flex: 1, height: '1px', background: 'var(--gold-border)' }} />
-          <span style={{ color: 'var(--gold)', fontSize: '10px' }}>✦</span>
-          <div style={{ flex: 1, height: '1px', background: 'var(--gold-border)' }} />
         </div>
 
         {/* Arabic + Event Label */}
-        <div style={{ textAlign: 'center', animation: mounted ? 'cinReveal 0.7s 0.12s both' : 'none' }}>
-          <p style={{ fontFamily: 'serif', fontSize: '15px', color: 'var(--gold)', letterSpacing: '0.04em', marginBottom: '6px' }}>بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
-          <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '9px', fontWeight: '600', letterSpacing: '0.2em', color: 'var(--cream-sub)', textTransform: 'uppercase' }}>{EVENT_TYPE}</p>
+        <div style={{ textAlign: 'center', animation: mounted ? 'cinReveal 0.7s 0.12s both' : 'none', flexShrink: 0 }}>
+          <p style={{ fontFamily: 'serif', fontSize: '13px', color: 'var(--gold)', letterSpacing: '0.04em', marginBottom: '2px', marginTop: '2px' }}>بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+          <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '8px', fontWeight: '700', letterSpacing: '0.15em', color: 'var(--cream-sub)', textTransform: 'uppercase', marginBottom: '0px' }}>{EVENT_TYPE}</p>
         </div>
 
         {/* Couple Name */}
-        <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '52px', color: 'var(--gold)', textAlign: 'center', lineHeight: 1.1, marginTop: '4px', marginBottom: '12px', animation: mounted ? 'cinReveal 0.7s 0.2s both' : 'none' }}>
+        <h1 style={{
+          fontFamily: 'var(--font-great-vibes)', fontSize: '42px', color: 'var(--gold)',
+          textAlign: 'center', lineHeight: 1.05, marginTop: '2px', marginBottom: '4px',
+          animation: mounted ? 'cinReveal 0.7s 0.2s both' : 'none',
+          flexShrink: 0
+        }}>
           {COUPLE}
         </h1>
 
-        {/* Date & Location Pills */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '14px', animation: mounted ? 'cinReveal 0.7s 0.26s both' : 'none' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '5px 12px', background: 'var(--glass-card)', borderRadius: '999px', border: '1px solid var(--gold-border)', fontSize: '11px', color: 'var(--cream-sub)' }}>
-            <span>📅</span> {DATE}
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '5px 12px', background: 'var(--glass-card)', borderRadius: '999px', border: '1px solid var(--gold-border)', fontSize: '11px', color: 'var(--cream-sub)' }}>
-            <span>📍</span> {LOCATION}
-          </div>
+        {/* Date & Location Pill Row */}
+        <div style={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px',
+          fontSize: '10px', fontFamily: 'var(--font-poppins)', fontWeight: '700', color: '#5f4b35',
+          margin: '2px 0 6px', animation: mounted ? 'cinReveal 0.7s 0.26s both' : 'none',
+          flexShrink: 0
+        }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>📅 {DATE}</span>
+          <span style={{ color: 'rgba(198,162,84,0.3)', fontWeight: '400' }}>|</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>📍 {LOCATION}</span>
         </div>
 
         {/* Welcome Note Card */}
-        <div style={{ textAlign: 'center', padding: '12px 20px', background: 'rgba(255,255,255,0.7)', borderRadius: '16px', border: '1px solid var(--gold-border)', marginBottom: '16px', animation: mounted ? 'cinReveal 0.7s 0.32s both' : 'none' }}>
-          <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: 'var(--cream-sub)', lineHeight: 1.6 }}>Thank you for being part of this promise</p>
-          <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '12px', color: 'rgba(95,75,53,0.7)', lineHeight: 1.6 }}>A promise begins, a memory stays forever</p>
+        <div style={{
+          textAlign: 'center', padding: '6px 14px', background: 'rgba(255,255,255,0.7)',
+          borderRadius: '16px', border: '1.2px solid var(--gold-border)', marginBottom: '8px',
+          animation: mounted ? 'cinReveal 0.7s 0.32s both' : 'none',
+          flexShrink: 0
+        }}>
+          <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '11px', color: 'var(--cream-sub)', lineHeight: 1.4, margin: 0 }}>Thank you for being part of this promise</p>
+          <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '10px', color: 'rgba(95,75,53,0.7)', lineHeight: 1.4, margin: 0 }}>A promise begins, a memory stays forever</p>
         </div>
 
         {/* Couple Photo */}
-        <div style={{ borderRadius: '28px', overflow: 'hidden', marginBottom: '20px', aspectRatio: '1/1', background: 'linear-gradient(135deg, var(--cream-bg2), var(--cream-bg3))', position: 'relative', animation: mounted ? 'cinReveal 0.7s 0.4s both' : 'none', flexShrink: 0 }}>
+        <div style={{
+          borderRadius: '24px', overflow: 'hidden', marginBottom: '10px',
+          aspectRatio: '1/1', background: 'linear-gradient(135deg, var(--cream-bg2), var(--cream-bg3))',
+          position: 'relative', animation: mounted ? 'cinReveal 0.7s 0.4s both' : 'none',
+          flexShrink: 1, maxHeight: 'min(240px, 28vh)', width: 'auto',
+          marginLeft: 'auto', marginRight: 'auto', border: '1px solid var(--gold-border)'
+        }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/asset/front.jpg"
@@ -78,69 +109,79 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           />
-          {/* Fallback overlay if no image */}
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(23,17,11,0.5) 100%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', bottom: '16px', left: '16px', right: '16px' }}>
-            <div style={{ display: 'inline-block', background: 'rgba(198,162,84,0.9)', borderRadius: '999px', padding: '4px 14px', fontSize: '11px', color: '#fff', fontFamily: 'var(--font-poppins)', fontWeight: '600' }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 60%, rgba(23,17,11,0.4) 100%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '10px', left: '12px', right: '12px' }}>
+            <div style={{ display: 'inline-block', background: 'rgba(198,162,84,0.92)', borderRadius: '999px', padding: '3px 12px', fontSize: '9.5px', color: '#fff', fontFamily: 'var(--font-poppins)', fontWeight: '600', letterSpacing: '0.04em' }}>
               ✨ Capture Your Memory
             </div>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', paddingBottom: '24px', animation: mounted ? 'cinReveal 0.7s 0.5s both' : 'none' }}>
-
-          {/* Start Capture — primary */}
+        {/* Action Buttons Stack */}
+        <div style={{
+          display: 'flex', flexDirection: 'column', gap: '6px',
+          paddingBottom: 'max(env(safe-area-inset-bottom, 12px), 12px)',
+          animation: mounted ? 'cinReveal 0.7s 0.46s both' : 'none',
+          width: '100%', flexShrink: 0
+        }}>
+          
+          {/* 1. START CAPTURE */}
           <button onClick={onStartCapture} style={{
-            width: '100%', minHeight: '52px', borderRadius: '999px',
-            display: 'grid', gridTemplateColumns: '44px 1fr 28px', alignItems: 'center', padding: '0 16px',
-            background: 'linear-gradient(135deg,#15120e,#28251d 58%,#0f0f0c)',
-            color: '#fff8ec', border: '1px solid rgba(220,186,119,.7)',
-            boxShadow: '0 4px 14px rgba(0,0,0,0.22)',
+            width: '100%', height: '44px', borderRadius: '999px',
+            display: 'grid', gridTemplateColumns: '36px 1fr 24px', alignItems: 'center', padding: '0 8px',
+            background: 'linear-gradient(135deg, #15120e, #28251d)',
+            color: '#fff8ec', border: '1px solid rgba(220,186,119,0.5)',
+            boxShadow: '0 3px 8px rgba(0,0,0,0.18)', cursor: 'pointer'
           }}>
-            <div style={{ width: '34px', height: '34px', borderRadius: '13px', background: 'linear-gradient(145deg,rgba(255,255,255,.96),rgba(232,209,166,.7))', display: 'grid', placeItems: 'center' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19C23 20.1 22.1 21 21 21H3C1.9 21 1 20.1 1 19V8C1 6.9 1.9 6 3 6H7L9 3H15L17 6H21C22.1 6 23 6.9 23 8V19Z" stroke="#b8914b" strokeWidth="2" strokeLinejoin="round" /><circle cx="12" cy="13" r="4" stroke="#b8914b" strokeWidth="2" /></svg>
+            <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(145deg, #fff, #e8d1a6)', display: 'grid', placeItems: 'center', fontSize: '13px' }}>
+              📸
             </div>
-            <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '12px', letterSpacing: '0.15em', fontWeight: 700, textTransform: 'uppercase' }}>START CAPTURE</span>
-            <span style={{ fontSize: '18px', color: 'var(--gold)' }}>›</span>
+            <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '10.5px', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', textAlign: 'center' }}>START CAPTURE</span>
+            <span style={{ fontSize: '15px', color: 'var(--gold)', fontWeight: 'bold' }}>›</span>
           </button>
 
-          {/* View Album */}
+          {/* 2. VIEW ALBUM */}
           <button onClick={onViewAlbum} style={{
-            width: '100%', minHeight: '52px', borderRadius: '999px',
-            display: 'grid', gridTemplateColumns: '44px 1fr 28px', alignItems: 'center', padding: '0 16px',
-            background: 'rgba(255,255,255,0.82)', color: '#17110b', border: '1px solid rgba(184,145,75,.25)',
+            width: '100%', height: '44px', borderRadius: '999px',
+            display: 'grid', gridTemplateColumns: '36px 1fr 24px', alignItems: 'center', padding: '0 8px',
+            background: '#fffdf9', color: '#17110b', border: '1px solid rgba(184,145,75,0.22)',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.04)', cursor: 'pointer'
           }}>
-            <div style={{ width: '34px', height: '34px', borderRadius: '13px', background: 'linear-gradient(145deg,rgba(255,255,255,.94),rgba(232,209,166,.66))', display: 'grid', placeItems: 'center' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="#b8914b" strokeWidth="2" /><rect x="13" y="3" width="8" height="8" rx="2" stroke="#b8914b" strokeWidth="2" /><rect x="3" y="13" width="8" height="8" rx="2" stroke="#b8914b" strokeWidth="2" /><rect x="13" y="13" width="8" height="8" rx="2" stroke="#b8914b" strokeWidth="2" /></svg>
+            <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(145deg, #fff, #e8d1a6)', display: 'grid', placeItems: 'center', fontSize: '13px' }}>
+              🖼️
             </div>
-            <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '12px', letterSpacing: '0.15em', fontWeight: 700, textTransform: 'uppercase' }}>VIEW ALBUM</span>
-            <span style={{ fontSize: '18px', color: 'var(--gold)' }}>›</span>
+            <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '10.5px', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', textAlign: 'center' }}>VIEW ALBUM</span>
+            <span style={{ fontSize: '15px', color: 'var(--gold)', fontWeight: 'bold' }}>›</span>
           </button>
 
-          {/* Voice & Note row */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-            <button onClick={onVoiceMemory} style={{
-              minHeight: '52px', borderRadius: '999px',
-              display: 'grid', gridTemplateColumns: '34px 1fr', alignItems: 'center', padding: '0 14px',
-              background: 'rgba(255,255,255,0.5)', color: '#6d4c28', border: '1px solid rgba(184,145,75,.2)',
-            }}>
-              <div style={{ width: '28px', height: '28px', borderRadius: '9px', background: 'linear-gradient(145deg,rgba(255,255,255,.94),rgba(232,209,166,.66))', display: 'grid', placeItems: 'center' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="12" rx="3" stroke="#b8914b" strokeWidth="2.2" /><path d="M5 10C5 14.42 8.13 18 12 18" stroke="#b8914b" strokeWidth="2.2" strokeLinecap="round" /></svg>
-              </div>
-              <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '10px', letterSpacing: '0.1em', fontWeight: 600, textTransform: 'uppercase' }}>VOICE</span>
-            </button>
-            <button onClick={onWriteNote} style={{
-              minHeight: '52px', borderRadius: '999px',
-              display: 'grid', gridTemplateColumns: '34px 1fr', alignItems: 'center', padding: '0 14px',
-              background: 'rgba(255,255,255,0.5)', color: '#6d4c28', border: '1px solid rgba(184,145,75,.2)',
-            }}>
-              <div style={{ width: '28px', height: '28px', borderRadius: '9px', background: 'linear-gradient(145deg,rgba(255,255,255,.94),rgba(232,209,166,.66))', display: 'grid', placeItems: 'center' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 20H21" stroke="#b8914b" strokeWidth="2.2" strokeLinecap="round" /><path d="M16.5 3.5C16.89 3.11 17.41 2.89 17.95 2.89C18.22 2.89 18.48 2.95 18.72 3.06C18.96 3.17 19.18 3.33 19.36 3.5C19.54 3.68 19.7 3.89 19.81 4.13C19.92 4.37 19.97 4.63 19.97 4.9C19.97 5.17 19.92 5.43 19.81 5.67L8 17.5L4 18.5L5 14.5L16.5 3.5Z" stroke="#b8914b" strokeWidth="2.2" strokeLinejoin="round" /></svg>
-              </div>
-              <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '10px', letterSpacing: '0.1em', fontWeight: 600, textTransform: 'uppercase' }}>WRITE NOTE</span>
-            </button>
-          </div>
+          {/* 3. VOICE MEMORY */}
+          <button onClick={onVoiceMemory} style={{
+            width: '100%', height: '44px', borderRadius: '999px',
+            display: 'grid', gridTemplateColumns: '36px 1fr 24px', alignItems: 'center', padding: '0 8px',
+            background: '#fffdf9', color: '#17110b', border: '1px solid rgba(184,145,75,0.22)',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.04)', cursor: 'pointer'
+          }}>
+            <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(145deg, #fff, #e8d1a6)', display: 'grid', placeItems: 'center', fontSize: '13px' }}>
+              🎙️
+            </div>
+            <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '10.5px', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', textAlign: 'center' }}>VOICE MEMORY</span>
+            <span style={{ fontSize: '15px', color: 'var(--gold)', fontWeight: 'bold' }}>›</span>
+          </button>
+
+          {/* 4. WRITE A NOTE */}
+          <button onClick={onWriteNote} style={{
+            width: '100%', height: '44px', borderRadius: '999px',
+            display: 'grid', gridTemplateColumns: '36px 1fr 24px', alignItems: 'center', padding: '0 8px',
+            background: '#fffdf9', color: '#17110b', border: '1px solid rgba(184,145,75,0.22)',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.04)', cursor: 'pointer'
+          }}>
+            <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(145deg, #fff, #e8d1a6)', display: 'grid', placeItems: 'center', fontSize: '13px' }}>
+              ✍️
+            </div>
+            <span style={{ fontFamily: 'var(--font-poppins)', fontSize: '10.5px', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', textAlign: 'center' }}>WRITE A NOTE</span>
+            <span style={{ fontSize: '15px', color: 'var(--gold)', fontWeight: 'bold' }}>›</span>
+          </button>
+
         </div>
 
       </div>
