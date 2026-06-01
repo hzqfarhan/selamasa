@@ -75,7 +75,7 @@ function ShareButton({ caption, onShare }: { caption: string; onShare: (caption:
     <button
       onClick={handleClick}
       disabled={uploading}
-      style={{ padding: '14px', background: uploading ? 'rgba(198,162,84,0.5)' : 'linear-gradient(135deg, var(--gold), #a67c00)', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+      style={{ padding: '14px', background: uploading ? 'rgba(74,144,226,0.5)' : 'linear-gradient(135deg, var(--gold), #1e4e8c)', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
     >
       {uploading ? (
         <>

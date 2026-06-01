@@ -18,7 +18,7 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
   useEffect(() => { setMounted(true) }, [])
 
   return (
-    <div className="screen" style={{ background: '#f8f1e8', overflow: 'hidden' }}>
+    <div className="screen" style={{ background: 'linear-gradient(180deg,#f4f9ff 0%,#d5e9ff 100%)', overflow: 'hidden' }}>
       <div className="welcome-cinema-page">
         
         {/* Brand capsule */}

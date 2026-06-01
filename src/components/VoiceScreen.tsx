@@ -216,7 +216,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
 
   return (
     <div className="screen" style={{
-      background: 'radial-gradient(circle at center, #2b1f13 0%, #0d0805 100%)',
+      background: 'radial-gradient(circle at center, #101c2c 0%, #05090e 100%)',
       padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px',
       display: 'flex',
       flexDirection: 'column',
@@ -228,17 +228,17 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
       <div style={{
         position: 'absolute', top: '-100px', right: '-100px',
         width: '320px', height: '320px', borderRadius: '50%',
-        border: '1.5px solid rgba(198,162,84,0.12)', pointerEvents: 'none'
+        border: '1.5px solid rgba(74,144,226,0.12)', pointerEvents: 'none'
       }} />
       <div style={{
         position: 'absolute', top: '-80px', right: '-80px',
         width: '280px', height: '280px', borderRadius: '50%',
-        border: '1px solid rgba(198,162,84,0.06)', pointerEvents: 'none'
+        border: '1px solid rgba(74,144,226,0.06)', pointerEvents: 'none'
       }} />
       <div style={{
         position: 'absolute', bottom: '-150px', left: '-150px',
         width: '360px', height: '360px', borderRadius: '50%',
-        border: '1.5px solid rgba(198,162,84,0.12)', pointerEvents: 'none'
+        border: '1.5px solid rgba(74,144,226,0.12)', pointerEvents: 'none'
       }} />
       
       {/* Hidden Audio Player for Previews */}
@@ -249,7 +249,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
         <button onClick={onClose} style={{
           width: '42px', height: '42px', borderRadius: '50%',
           background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(198,162,84,0.22)',
+          border: '1px solid rgba(74,144,226,0.22)',
           display: 'grid', placeItems: 'center',
           color: '#fff', fontSize: '18px', cursor: 'pointer'
         }}>
@@ -261,23 +261,23 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
 
       {/* Brand & Couple Section */}
       <div style={{ textAlign: 'center', marginTop: '10px', zIndex: 10 }}>
-        <div style={{ fontFamily: 'var(--font-playfair)', fontStyle: 'italic', fontSize: '15px', color: '#c6a254', letterSpacing: '0.04em' }}>Sela Masa</div>
+        <div style={{ fontFamily: 'var(--font-playfair)', fontStyle: 'italic', fontSize: '15px', color: '#3a86d4', letterSpacing: '0.04em' }}>Sela Masa</div>
         <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '42px', color: '#fff', margin: '4px 0 10px', lineHeight: 1.1 }}>
           {coupleName}
         </h1>
         
         {/* AUDIO GUESTBOOK badge */}
         <div style={{
-          border: '1px solid rgba(198,162,84,0.4)',
+          border: '1px solid rgba(74,144,226,0.4)',
           borderRadius: '999px',
           padding: '6px 18px',
           fontSize: '9px',
           fontWeight: '700',
           letterSpacing: '0.15em',
-          color: '#c6a254',
+          color: '#3a86d4',
           display: 'inline-block',
           textTransform: 'uppercase',
-          background: 'rgba(198,162,84,0.05)',
+          background: 'rgba(74,144,226,0.05)',
         }}>
           AUDIO GUESTBOOK
         </div>
@@ -301,9 +301,9 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
           onClick={isRecording ? stopRecording : (previewUrl ? togglePlayPreview : startRecording)}
           style={{
             width: '126px', height: '126px', borderRadius: '50%',
-            background: 'linear-gradient(135deg, #fbe8c5 0%, #c6a254 50%, #8a6a2f 100%)',
+            background: 'linear-gradient(135deg, #c7e1fa 0%, #3a86d4 50%, #1e4e8c 100%)',
             border: '4px solid rgba(255,255,255,0.08)',
-            boxShadow: '0 0 0 2px #c6a254, 0 12px 30px rgba(0,0,0,0.6)',
+            boxShadow: '0 0 0 2px #3a86d4, 0 12px 30px rgba(0,0,0,0.6)',
             display: 'grid', placeItems: 'center', cursor: 'pointer',
             transition: 'transform 0.15s, box-shadow 0.2s',
           }}
@@ -328,7 +328,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
         </p>
         
         <p style={{
-          fontFamily: 'var(--font-dm-sans)', fontSize: '12px', color: '#c6a254',
+          fontFamily: 'var(--font-dm-sans)', fontSize: '12px', color: '#3a86d4',
           fontWeight: '600', textAlign: 'center', marginBottom: '24px'
         }}>
           Maximum recording: 60 seconds
@@ -350,7 +350,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
           style={{
             width: '100%', maxWidth: '310px',
             padding: '15px 22px', borderRadius: '999px',
-            border: '1.2px solid rgba(198,162,84,0.3)',
+            border: '1.2px solid rgba(74,144,226,0.3)',
             background: 'rgba(255,255,255,0.03)',
             color: '#fff', textAlign: 'center',
             fontSize: '14px', fontFamily: 'var(--font-dm-sans)',
@@ -363,7 +363,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
           onClick={isRecording ? stopRecording : (previewUrl ? togglePlayPreview : startRecording)}
           style={{
             fontFamily: 'var(--font-poppins)', fontSize: '11px', fontWeight: '700',
-            letterSpacing: '0.18em', color: '#fbe8c5', marginTop: '16px',
+            letterSpacing: '0.18em', color: '#c7e1fa', marginTop: '16px',
             textTransform: 'uppercase', cursor: 'pointer', opacity: 0.95
           }}
         >
@@ -385,7 +385,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
           style={{
             padding: '15px',
             background: 'rgba(255,255,255,0.02)',
-            border: '1.2px solid rgba(198,162,84,0.22)',
+            border: '1.2px solid rgba(74,144,226,0.22)',
             borderRadius: '999px',
             color: '#fff',
             opacity: audioBlob ? 0.9 : 0.28,
@@ -404,14 +404,14 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
           disabled={!isFormValid}
           style={{
             padding: '15px',
-            background: isFormValid ? 'linear-gradient(135deg, #c6a254, #8a6a2f)' : 'rgba(198,162,84,0.1)',
-            border: isFormValid ? 'none' : '1px solid rgba(198,162,84,0.15)',
+            background: isFormValid ? 'linear-gradient(135deg, #3a86d4, #1e4e8c)' : 'rgba(74,144,226,0.1)',
+            border: isFormValid ? 'none' : '1px solid rgba(74,144,226,0.15)',
             borderRadius: '999px',
-            color: isFormValid ? '#17110b' : 'rgba(255,255,255,0.28)',
+            color: isFormValid ? '#fff' : 'rgba(255,255,255,0.28)',
             fontSize: '11px', fontWeight: '700',
             fontFamily: 'var(--font-poppins)', letterSpacing: '0.12em',
             textTransform: 'uppercase', cursor: isFormValid ? 'pointer' : 'default',
-            boxShadow: isFormValid ? '0 5px 18px rgba(198,162,84,0.3)' : 'none',
+            boxShadow: isFormValid ? '0 5px 18px rgba(74, 144, 226, 0.3)' : 'none',
             transition: 'all 0.2s'
           }}
         >

@@ -13,7 +13,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   }, [onComplete])
 
   return (
-    <div className="screen" data-out={out} style={{ background: '#f8f1e8 url(/floral-bg.jpg) center/cover' }}>
+    <div className="screen" data-out={out} style={{ background: 'linear-gradient(180deg,#f4f9ff 0%,#d5e9ff 100%)' }}>
       {/* Animated petals */}
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
         {[...Array(5)].map((_, i) => (
@@ -42,7 +42,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
       </div>
 
       <div style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ width: '100%', height: '2px', background: 'rgba(198,162,84,0.3)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '2px', background: 'rgba(74,144,226,0.3)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '40%', background: 'var(--gold)', animation: 'loadingSlide 1.6s infinite ease-in-out' }} />
         </div>
         <span style={{ marginTop: '12px', fontFamily: 'var(--font-poppins)', fontSize: '9px', letterSpacing: '0.2em', color: 'var(--gold)', textTransform: 'uppercase' }}>Loading...</span>
