@@ -95,11 +95,11 @@ CREATE POLICY "Auth delete from memories"
 
 INSERT INTO events (id, bride, groom, event_date, location, type, package, features, allowed_filters, welcome_note)
 VALUES (
-  'mim-azhad-2026',
-  'Mim',
-  'Azhad',
-  '2026-08-15T10:00:00Z',
-  'Tampin, Negeri Sembilan',
+  'nureen-nizam-2026',
+  'Nureen',
+  'Nizam',
+  '2026-06-01T10:00:00Z',
+  'Kuala Lumpur',
   'engagement',
   'premium',
   '{"boomerang":true,"voice":true,"notes":true,"filters":true}',

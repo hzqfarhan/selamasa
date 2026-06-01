@@ -7,7 +7,7 @@ interface CaptureReviewProps {
   type: 'photo' | 'boomerang'
   guestName: string
   onRetake: () => void
-  onShare: (caption: string) => void
+  onShare: (caption: string) => Promise<void> | void
 }
 
 export default function CaptureReviewScreen({ mediaUrl, mediaBlob, type, guestName, onRetake, onShare }: CaptureReviewProps) {
@@ -55,10 +55,34 @@ export default function CaptureReviewScreen({ mediaUrl, mediaBlob, type, guestNa
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: '8px' }}>
           <button onClick={onRetake} style={{ padding: '14px', background: 'rgba(255,255,255,0.2)', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>Retake</button>
           <a href={mediaUrl || '#'} download={`selamasa-${Date.now()}.${type === 'photo' ? 'jpg' : 'webm'}`} style={{ padding: '14px', background: 'rgba(255,255,255,0.2)', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: 'bold', textAlign: 'center', display: 'grid', placeItems: 'center' }}>Save</a>
-          <button onClick={() => onShare(caption)} style={{ padding: '14px', background: 'linear-gradient(135deg, var(--gold), #a67c00)', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>Share Memory</button>
+          <ShareButton caption={caption} onShare={onShare} />
         </div>
 
       </div>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
+  )
+}
+
+function ShareButton({ caption, onShare }: { caption: string; onShare: (caption: string) => Promise<void> | void }) {
+  const [uploading, setUploading] = useState(false)
+  const handleClick = async () => {
+    if (uploading) return
+    setUploading(true)
+    try { await onShare(caption) } finally { setUploading(false) }
+  }
+  return (
+    <button
+      onClick={handleClick}
+      disabled={uploading}
+      style={{ padding: '14px', background: uploading ? 'rgba(198,162,84,0.5)' : 'linear-gradient(135deg, var(--gold), #a67c00)', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+    >
+      {uploading ? (
+        <>
+          <div style={{ width: '16px', height: '16px', border: '2px solid #fff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
+          Uploading…
+        </>
+      ) : 'Share Memory'}
+    </button>
   )
 }

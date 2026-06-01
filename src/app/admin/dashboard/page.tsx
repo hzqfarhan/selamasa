@@ -24,12 +24,12 @@ export default function AdminDashboard() {
   }
 
   const createDummyEvent = async () => {
-    const slug = 'mim-azhad-2026'
+    const slug = 'nureen-nizam-2026'
     await upsertEvent(slug, {
-      bride: 'Mim',
-      groom: 'Azhad',
+      bride: 'Nureen',
+      groom: 'Nizam',
       event_date: new Date().toISOString(),
-      location: 'Tampin, N9',
+      location: 'Kuala Lumpur',
       type: 'engagement',
       package: 'premium',
       allowed_filters: ['none', 'floral', 'gold', 'vintage', 'romantic'],

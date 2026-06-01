@@ -41,7 +41,7 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value.slice(0, 500))}
-            placeholder="Dear Mim & Azhad..."
+            placeholder="Dear Nureen & Nizam..."
             style={{ width: '100%', height: '120px', resize: 'none', background: 'transparent', borderBottom: '1px solid var(--gold)', fontFamily: 'var(--font-playfair)', fontStyle: 'italic', fontSize: '20px', color: 'var(--cream-text)' }}
           />
           <span style={{ position: 'absolute', bottom: '8px', right: '0', fontSize: '10px', color: 'var(--cream-sub)' }}>{message.length}/500</span>
