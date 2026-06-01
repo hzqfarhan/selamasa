@@ -16,20 +16,18 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
   const [micError, setMicError] = useState<string | null>(null)
   const [recordingTime, setRecordingTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const chunksRef = useRef<Blob[]>([])
-  const analyserRef = useRef<AnalyserNode | null>(null)
-  const audioCtxRef = useRef<AudioContext | null>(null)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [waveform, setWaveform] = useState<number[]>([])
 
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl)
       if (timerRef.current) clearInterval(timerRef.current)
-      if (audioCtxRef.current) audioCtxRef.current.close().catch(() => {})
     }
   }, [previewUrl])
 
@@ -38,85 +36,95 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
     const audio = audioRef.current
     if (!audio) return
 
-    const handleEnded = () => setIsPlaying(false)
+    const handleEnded = () => {
+      setIsPlaying(false)
+      setCurrentTime(0)
+    }
     const handlePlay = () => setIsPlaying(true)
     const handlePause = () => setIsPlaying(false)
+    const handleTimeUpdate = () => {
+      if (audio.currentTime) setCurrentTime(audio.currentTime)
+    }
+    const handleLoadedMetadata = () => {
+      if (audio.duration) setDuration(audio.duration)
+    }
 
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('play', handlePlay)
     audio.addEventListener('pause', handlePause)
+    audio.addEventListener('timeupdate', handleTimeUpdate)
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata)
 
     return () => {
       audio.removeEventListener('ended', handleEnded)
       audio.removeEventListener('play', handlePlay)
       audio.removeEventListener('pause', handlePause)
+      audio.removeEventListener('timeupdate', handleTimeUpdate)
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
     }
   }, [previewUrl])
+
+  const chooseMimeType = () => {
+    const types = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/ogg;codecs=opus',
+      'audio/ogg',
+      'audio/mp4'
+    ]
+    for (const t of types) {
+      if (window.MediaRecorder && MediaRecorder.isTypeSupported(t)) return t
+    }
+    return ''
+  }
 
   const startRecording = async () => {
     setMicError(null)
     setAudioBlob(null)
     setPreviewUrl(null)
     setIsPlaying(false)
+    setCurrentTime(0)
+    setDuration(0)
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const mr = new MediaRecorder(stream)
-      chunksRef.current = []
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      })
 
-      let audioCtx: AudioContext | null = null
+      const mimeType = chooseMimeType()
+      let mr: MediaRecorder
       try {
-        const AudioContextClass = (window as any).AudioContext || (window as any).webkitAudioContext
-        if (AudioContextClass) {
-          audioCtx = new AudioContextClass()
-          audioCtxRef.current = audioCtx
-        }
-      } catch (ctxErr) {
-        console.warn('AudioContext failed:', ctxErr)
+        mr = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream)
+      } catch (e) {
+        mr = new MediaRecorder(stream)
       }
 
-      if (audioCtx) {
-        try {
-          const source = audioCtx.createMediaStreamSource(stream)
-          const analyser = audioCtx.createAnalyser()
-          analyser.fftSize = 64
-          source.connect(analyser)
-          analyserRef.current = analyser
-
-          const updateWaveform = () => {
-            if (mr.state !== 'recording') return
-            const dataArray = new Uint8Array(analyser.frequencyBinCount)
-            analyser.getByteFrequencyData(dataArray)
-            const subset = Array.from(dataArray).slice(0, 16)
-            setWaveform(subset)
-            requestAnimationFrame(updateWaveform)
-          }
-
-          mr.onstart = () => {
-            requestAnimationFrame(updateWaveform)
-          }
-        } catch (analyserErr) {
-          console.warn('Waveform analysis failed:', analyserErr)
-        }
-      }
+      chunksRef.current = []
 
       mr.ondataavailable = e => { if (e.data.size > 0) chunksRef.current.push(e.data) }
       mr.onstop = () => {
-        const mimeType = mr.mimeType || 'audio/webm'
-        const blob = new Blob(chunksRef.current, { type: mimeType })
+        stream.getTracks().forEach(t => t.stop())
+        if (!chunksRef.current.length) {
+          setMicError('Recording is empty. Please try again.')
+          return
+        }
+
+        const actualMime = mr.mimeType || 'audio/webm'
+        const blob = new Blob(chunksRef.current, { type: actualMime })
+        if (blob.size < 1200) {
+          setMicError('Recording too short. Speak a bit more!')
+          return
+        }
+
         setAudioBlob(blob)
         setPreviewUrl(URL.createObjectURL(blob))
-        stream.getTracks().forEach(t => t.stop())
-        if (audioCtx) {
-          audioCtx.close().catch(() => {})
-        }
-        if (timerRef.current) {
-          clearInterval(timerRef.current)
-          timerRef.current = null
-        }
         setIsRecording(false)
       }
 
-      mr.start(100)
+      mr.start(250)
       mediaRecorderRef.current = mr
       setIsRecording(true)
       setRecordingTime(0)
@@ -124,7 +132,6 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
       timerRef.current = setInterval(() => {
         setRecordingTime(t => {
           if (t >= 59) {
-            // Auto stop at 60s limit
             stopRecording()
             return 60
           }
@@ -135,7 +142,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
       console.error(e)
       setMicError(
         e.name === 'NotAllowedError'
-          ? 'Microphone permission denied. Please allow microphone access in your browser settings.'
+          ? 'Microphone permission denied. Please allow mic access in your browser settings.'
           : 'Microphone not available on this device.'
       )
       setIsRecording(false)
@@ -168,7 +175,9 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
     setAudioBlob(null)
     setPreviewUrl(null)
     setIsPlaying(false)
-    setWaveform([])
+    setCurrentTime(0)
+    setDuration(0)
+    setMicError(null)
   }
 
   const handleSubmit = () => {
@@ -177,247 +186,150 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
     }
   }
 
-  const renderPromptText = () => {
-    if (isRecording) {
-      return 'RECORDING... (TAP TO STOP)'
-    }
-    if (previewUrl) {
-      return isPlaying ? 'PLAYING... (TAP TO PAUSE)' : 'RECORDED (TAP TO LISTEN)'
-    }
-    return 'TAP TO RECORD'
+  const formatTime = (seconds: number) => {
+    if (!Number.isFinite(seconds) || seconds < 0) return '0:00'
+    const sec = Math.floor(seconds)
+    const mm = Math.floor(sec / 60)
+    const ss = String(sec % 60).padStart(2, '0')
+    return `${mm}:${ss}`
   }
 
-  const renderBadgeContent = () => {
-    if (isRecording) {
-      return (
-        <div style={{ width: '28px', height: '28px', background: '#ff3b30', borderRadius: '6px', animation: 'recPulse 1s infinite' }} />
-      )
-    }
-    if (previewUrl) {
-      return isPlaying ? (
-        // Pause icon SVG
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="#17110b">
-          <rect x="5" y="4" width="4" height="16" rx="1" />
-          <rect x="15" y="4" width="4" height="16" rx="1" />
-        </svg>
-      ) : (
-        // Play icon SVG
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="#17110b" style={{ marginLeft: '6px' }}>
-          <path d="M8 5V19L19 12L8 5Z" />
-        </svg>
-      )
-    }
-    return (
-      <span style={{ fontSize: '38px', userSelect: 'none' }}>🎙️</span>
-    )
-  }
-
+  const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0
   const isFormValid = audioBlob !== null && name.trim() !== ''
 
   return (
-    <div className="screen" style={{
-      background: 'radial-gradient(circle at center, #101c2c 0%, #05090e 100%)',
-      padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px',
-      display: 'flex',
-      flexDirection: 'column',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      
-      {/* Background Decorative Concentric Rings/Arcs */}
-      <div style={{
-        position: 'absolute', top: '-100px', right: '-100px',
-        width: '320px', height: '320px', borderRadius: '50%',
-        border: '1.5px solid rgba(74,144,226,0.12)', pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute', top: '-80px', right: '-80px',
-        width: '280px', height: '280px', borderRadius: '50%',
-        border: '1px solid rgba(74,144,226,0.06)', pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '-150px', left: '-150px',
-        width: '360px', height: '360px', borderRadius: '50%',
-        border: '1.5px solid rgba(74,144,226,0.12)', pointerEvents: 'none'
-      }} />
-      
-      {/* Hidden Audio Player for Previews */}
-      {previewUrl && <audio ref={audioRef} src={previewUrl} style={{ display: 'none' }} />}
-
-      {/* Top Header Row */}
-      <div style={{ display: 'flex', alignItems: 'center', width: '100%', zIndex: 10, position: 'relative' }}>
-        <button onClick={onClose} style={{
-          width: '42px', height: '42px', borderRadius: '50%',
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(74,144,226,0.22)',
-          display: 'grid', placeItems: 'center',
-          color: '#fff', fontSize: '18px', cursor: 'pointer'
-        }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      </div>
-
-      {/* Brand & Couple Section */}
-      <div style={{ textAlign: 'center', marginTop: '10px', zIndex: 10 }}>
-        <div style={{ fontFamily: 'var(--font-playfair)', fontStyle: 'italic', fontSize: '15px', color: '#3a86d4', letterSpacing: '0.04em' }}>Sela Masa</div>
-        <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '42px', color: '#fff', margin: '4px 0 10px', lineHeight: 1.1 }}>
-          {coupleName}
-        </h1>
-        
-        {/* AUDIO GUESTBOOK badge */}
-        <div style={{
-          border: '1px solid rgba(74,144,226,0.4)',
-          borderRadius: '999px',
-          padding: '6px 18px',
-          fontSize: '9px',
-          fontWeight: '700',
-          letterSpacing: '0.15em',
-          color: '#3a86d4',
-          display: 'inline-block',
-          textTransform: 'uppercase',
-          background: 'rgba(74,144,226,0.05)',
-        }}>
-          AUDIO GUESTBOOK
-        </div>
-      </div>
-
-      {/* Center Interactive Recorder Circle */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', zIndex: 10 }}>
-        
-        {/* Red Live Stopwatch overlay */}
-        {isRecording && (
-          <div style={{
-            fontFamily: 'var(--font-poppins)', fontSize: '13px', color: '#ff3b30', fontWeight: 'bold',
-            marginBottom: '10px', background: 'rgba(255,59,48,0.1)', padding: '4px 12px', borderRadius: '999px'
-          }}>
-            🔴 0:{(recordingTime).toString().padStart(2, '0')} / 1:00
-          </div>
-        )}
-
-        {/* Double-Ring Golden Concentric recorder circle */}
-        <button
-          onClick={isRecording ? stopRecording : (previewUrl ? togglePlayPreview : startRecording)}
-          style={{
-            width: '126px', height: '126px', borderRadius: '50%',
-            background: 'linear-gradient(135deg, #c7e1fa 0%, #3a86d4 50%, #1e4e8c 100%)',
-            border: '4px solid rgba(255,255,255,0.08)',
-            boxShadow: '0 0 0 2px #3a86d4, 0 12px 30px rgba(0,0,0,0.6)',
-            display: 'grid', placeItems: 'center', cursor: 'pointer',
-            transition: 'transform 0.15s, box-shadow 0.2s',
-          }}
-          className="rec-badge"
-        >
-          {renderBadgeContent()}
+    <div className="screen" style={{ background: '#070a12', overflow: 'hidden' }}>
+      <div className="voice-page">
+        {/* Back navigation */}
+        <button className="voice-back" onClick={onClose} type="button" aria-label="Go Back">
+          ←
         </button>
 
-        {/* Serif main description */}
-        <h3 style={{
-          fontFamily: 'var(--font-playfair)', fontStyle: 'italic', fontSize: '28px',
-          fontWeight: '400', color: '#fff', textAlign: 'center', marginTop: '24px', marginBottom: '8px'
-        }}>
-          Leave Your Voice
-        </h3>
-        
-        <p style={{
-          fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: 'rgba(255,253,249,0.7)',
-          textAlign: 'center', maxWidth: '290px', lineHeight: 1.6, margin: '0 auto 4px'
-        }}>
-          Tap record, speak your wishes, then preview your voice before sending it to the album.
-        </p>
-        
-        <p style={{
-          fontFamily: 'var(--font-dm-sans)', fontSize: '12px', color: '#3a86d4',
-          fontWeight: '600', textAlign: 'center', marginBottom: '24px'
-        }}>
-          Maximum recording: 60 seconds
-        </p>
+        {/* Brand & Couple Section */}
+        <header className="voice-head">
+          <div className="voice-brand">Sela Masa</div>
+          <h1 className="voice-couple">{coupleName}</h1>
+          <div className="voice-chip">Audio Guestbook</div>
+        </header>
 
-        {/* Mic Access Error Warnings */}
-        {micError && (
-          <p style={{ color: '#ff3b30', fontFamily: 'var(--font-dm-sans)', fontSize: '13px', textAlign: 'center', maxWidth: '280px', marginBottom: '16px', lineHeight: 1.4 }}>
-            ⚠️ {micError}
-          </p>
-        )}
+        {/* Audio tag for preview */}
+        {previewUrl && <audio ref={audioRef} src={previewUrl} preload="metadata" />}
 
-        {/* Capsule Name Input */}
-        <input
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder="Your name, e.g. Aunty Sarah"
-          style={{
-            width: '100%', maxWidth: '310px',
-            padding: '15px 22px', borderRadius: '999px',
-            border: '1.2px solid rgba(74,144,226,0.3)',
-            background: 'rgba(255,255,255,0.03)',
-            color: '#fff', textAlign: 'center',
-            fontSize: '14px', fontFamily: 'var(--font-dm-sans)',
-            outline: 'none', transition: 'border-color 0.2s',
-          }}
-        />
+        {/* Main Content Area */}
+        <main className="voice-content">
+          <section className={`voice-card ${audioBlob ? 'has-preview' : ''}`}>
+            
+            {/* Record Trigger Button */}
+            <div className="voice-record-wrap">
+              <div className="voice-pulse" />
+              <button 
+                className="voice-record-btn" 
+                type="button" 
+                onClick={isRecording ? stopRecording : startRecording}
+              >
+                {isRecording ? '■' : '🎙'}
+              </button>
+            </div>
 
-        {/* Tap Prompt text below input */}
-        <div 
-          onClick={isRecording ? stopRecording : (previewUrl ? togglePlayPreview : startRecording)}
-          style={{
-            fontFamily: 'var(--font-poppins)', fontSize: '11px', fontWeight: '700',
-            letterSpacing: '0.18em', color: '#c7e1fa', marginTop: '16px',
-            textTransform: 'uppercase', cursor: 'pointer', opacity: 0.95
-          }}
-        >
-          {renderPromptText()}
-        </div>
+            <h1 className="voice-title">
+              {audioBlob ? 'Ready to Send' : (isRecording ? 'Recording...' : 'Leave Your Voice')}
+            </h1>
+            
+            <p className="voice-sub">
+              {audioBlob 
+                ? 'Listen once before sending, then tap send voice.' 
+                : 'Tap record, speak your wishes, then preview your voice before sending it to the album.'}
+            </p>
 
-      </div>
+            {!audioBlob && (
+              <div className="voice-limit-note">Maximum recording: 60 seconds</div>
+            )}
 
-      {/* Bottom Retake / Send Voice buttons row */}
-      <div style={{
-        display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: '12px',
-        width: '100%', maxWidth: '340px', margin: 'auto auto 0', zIndex: 10
-      }}>
-        
-        {/* RETAKE */}
-        <button 
-          onClick={handleRetake} 
-          disabled={!audioBlob}
-          style={{
-            padding: '15px',
-            background: 'rgba(255,255,255,0.02)',
-            border: '1.2px solid rgba(74,144,226,0.22)',
-            borderRadius: '999px',
-            color: '#fff',
-            opacity: audioBlob ? 0.9 : 0.28,
-            fontSize: '11px', fontWeight: '700',
-            fontFamily: 'var(--font-poppins)', letterSpacing: '0.12em',
-            textTransform: 'uppercase', cursor: audioBlob ? 'pointer' : 'default',
-            transition: 'all 0.2s'
-          }}
-        >
-          RETAKE
-        </button>
+            {/* Guest Name Input */}
+            <input 
+              className="voice-name-input" 
+              type="text" 
+              maxLength={60} 
+              placeholder="Your name, e.g. Aunty Sarah"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
 
-        {/* SEND VOICE */}
-        <button 
-          onClick={handleSubmit} 
-          disabled={!isFormValid}
-          style={{
-            padding: '15px',
-            background: isFormValid ? 'linear-gradient(135deg, #3a86d4, #1e4e8c)' : 'rgba(74,144,226,0.1)',
-            border: isFormValid ? 'none' : '1px solid rgba(74,144,226,0.15)',
-            borderRadius: '999px',
-            color: isFormValid ? '#fff' : 'rgba(255,255,255,0.28)',
-            fontSize: '11px', fontWeight: '700',
-            fontFamily: 'var(--font-poppins)', letterSpacing: '0.12em',
-            textTransform: 'uppercase', cursor: isFormValid ? 'pointer' : 'default',
-            boxShadow: isFormValid ? '0 5px 18px rgba(74, 144, 226, 0.3)' : 'none',
-            transition: 'all 0.2s'
-          }}
-        >
-          SEND VOICE
-        </button>
+            {/* Timer or State Text */}
+            <div className="voice-timer">
+              {isRecording 
+                ? `Recording ${formatTime(recordingTime)}` 
+                : (audioBlob ? 'Preview your voice' : 'Tap to record')}
+            </div>
 
+            {/* Microphone Access Error Warnings */}
+            {micError && (
+              <p style={{ color: '#ff5c5c', fontFamily: 'var(--font-dm-sans)', fontSize: '12px', textAlign: 'center', maxWidth: '280px', marginTop: '4px', lineHeight: 1.4 }}>
+                ⚠️ {micError}
+              </p>
+            )}
+
+            {/* Preview custom player */}
+            <div className={`voice-preview ${audioBlob ? 'show' : ''}`}>
+              <div className="voice-custom-player">
+                <button 
+                  className="voice-play-btn" 
+                  type="button" 
+                  onClick={togglePlayPreview}
+                  aria-label="Play preview"
+                >
+                  {isPlaying ? '❚❚' : '▶'}
+                </button>
+
+                <div className="voice-player-track">
+                  <div className="voice-wave-line">
+                    <div className="voice-wave-progress" style={{ width: `${progressPercentage}%` }} />
+                  </div>
+                  <input 
+                    className="voice-seek-bar"
+                    type="range" 
+                    min={0} 
+                    max={100} 
+                    step={0.1}
+                    value={progressPercentage}
+                    onChange={e => {
+                      if (audioRef.current && duration > 0) {
+                        const newTime = (Number(e.target.value) / 100) * duration
+                        audioRef.current.currentTime = newTime
+                        setCurrentTime(newTime)
+                      }
+                    }}
+                    aria-label="Voice progress"
+                  />
+                </div>
+
+                <div className="voice-time-text">{formatTime(currentTime)}</div>
+              </div>
+            </div>
+
+          </section>
+        </main>
+
+        {/* Footer Buttons */}
+        <footer className="voice-foot">
+          <button 
+            className="voice-btn voice-btn-secondary" 
+            type="button" 
+            onClick={handleRetake}
+            disabled={!audioBlob}
+          >
+            Retake
+          </button>
+          
+          <button 
+            className="voice-btn voice-btn-send" 
+            type="button" 
+            onClick={handleSubmit}
+            disabled={!isFormValid}
+          >
+            Send Voice
+          </button>
+        </footer>
       </div>
     </div>
   )
