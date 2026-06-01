@@ -9,17 +9,17 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
       <FallingLeaves />
       <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px 20px', position: 'relative', zIndex: 2 }}>
         
-        <div style={{ background: '#0e1522', borderRadius: '35px', padding: '30px 20px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ background: '#fff', borderRadius: '35px', padding: '30px 20px', color: '#111', position: 'relative', overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/asset/front.jpg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 21, 34, 0.7) 0%, transparent 60%)' }} />
+          <img src="/asset/front.jpg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 21, 34, 0.3) 0%, transparent 60%)' }} />
           
           <div style={{ position: 'relative', zIndex: 2 }}>
-            <div style={{ background: 'rgba(255,255,255,0.1)', display: 'inline-block', padding: '6px 12px', borderRadius: '999px', fontSize: '9px', fontFamily: 'var(--font-poppins)', letterSpacing: '0.1em' }}>
+            <div style={{ background: 'rgba(0,0,0,0.06)', display: 'inline-block', padding: '6px 12px', borderRadius: '999px', fontSize: '9px', fontFamily: 'var(--font-poppins)', letterSpacing: '0.1em', color: '#555' }}>
               ✦ DIGITAL WEDDING MEMORY SERVICE
             </div>
             <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '48px', color: 'var(--gold)', margin: '16px 0 8px' }}>SelaMasa</h1>
-            <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: 'var(--t2)', lineHeight: 1.5, marginBottom: '20px' }}>
+            <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: '#333', lineHeight: 1.5, marginBottom: '20px' }}>
               Elevate your wedding experience with our premium digital guestbook and live album platform. Cherish every memory seamlessly.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>

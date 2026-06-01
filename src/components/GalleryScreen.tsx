@@ -53,17 +53,17 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
       </div>
 
       {/* Hero Card */}
-      <div style={{ margin: '12px 16px', borderRadius: '28px', minHeight: '200px', background: '#0e1522', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ margin: '12px 16px', borderRadius: '28px', minHeight: '200px', background: '#fff', position: 'relative', overflow: 'hidden' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/asset/front.jpg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 21, 34, 0.8) 0%, rgba(14, 21, 34, 0.45) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 21, 34, 0.55) 0%, rgba(14, 21, 34, 0.15) 100%)' }} />
         <div style={{ position: 'absolute', inset: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <h2 style={{ color: '#fff', fontFamily: 'var(--font-playfair)', fontSize: '26px', fontWeight: '700', marginBottom: '2px' }}>{coupleName}</h2>
+          <h2 style={{ color: '#000', fontFamily: 'var(--font-playfair)', fontSize: '26px', fontWeight: '700', marginBottom: '2px' }}>{coupleName}</h2>
           <p style={{ fontFamily: 'var(--font-great-vibes)', color: 'var(--gold)', fontSize: '22px', marginBottom: '8px' }}>Engagement Memories</p>
-          <p style={{ color: 'rgba(255,255,255,0.75)', fontFamily: 'var(--font-dm-sans)', fontSize: '12px', maxWidth: '65%', lineHeight: 1.5 }}>Every smile, blessing, and heartfelt wish becomes part of this engagement memory.</p>
-          <div style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', borderRadius: '999px', padding: '6px 14px', border: '1px solid rgba(255,255,255,0.2)', alignSelf: 'flex-start' }}>
+          <p style={{ color: '#222', fontFamily: 'var(--font-dm-sans)', fontSize: '12px', maxWidth: '65%', lineHeight: 1.5 }}>Every smile, blessing, and heartfelt wish becomes part of this engagement memory.</p>
+          <div style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(8px)', borderRadius: '999px', padding: '6px 14px', border: '1px solid rgba(0,0,0,0.1)', alignSelf: 'flex-start' }}>
             <span style={{ color: 'var(--gold)', fontSize: '12px' }}>✨</span>
-            <span style={{ color: '#fff', fontSize: '12px', fontFamily: 'var(--font-poppins)', fontWeight: '600' }}>{memories.length} Memories Captured</span>
+            <span style={{ color: '#111', fontSize: '12px', fontFamily: 'var(--font-poppins)', fontWeight: '600' }}>{memories.length} Memories Captured</span>
           </div>
         </div>
       </div>
