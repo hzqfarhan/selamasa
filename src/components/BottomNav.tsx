@@ -13,14 +13,21 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
 
   return (
     <div style={{
-      position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-      width: '100%', maxWidth: '430px',
-      height: 'calc(74px + var(--safe-bot))',
-      background: 'rgba(255,255,255,0.97)',
+      position: 'fixed',
+      bottom: 'max(env(safe-area-inset-bottom, 16px), 16px)',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: 'calc(100% - 32px)',
+      maxWidth: '390px',
+      height: '66px',
+      background: 'rgba(255, 255, 255, 0.88)',
       backdropFilter: 'blur(20px)',
-      borderTop: '1px solid var(--gold-border)',
-      display: 'flex', justifyContent: 'space-around', alignItems: 'center',
-      paddingBottom: 'var(--safe-bot)', paddingTop: '4px',
+      borderRadius: '999px',
+      border: '1px solid var(--gold-border)',
+      boxShadow: '0 12px 36px rgba(42, 68, 95, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
       zIndex: 100,
     }}>
 
@@ -45,20 +52,23 @@ export default function BottomNav({ activeTab, onTabChange, onCaptureClick }: Bo
       </button>
 
       {/* Center Capture Button */}
-      <button onClick={onCaptureClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', marginTop: '-28px' }}>
+      <button onClick={onCaptureClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', marginTop: '-20px' }}>
         <div style={{
-          width: '64px', height: '64px', borderRadius: '50%',
-          background: 'linear-gradient(145deg, #121b2b, #070a12)',
-          border: '4px solid rgba(255,255,255,0.97)',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.28)',
-          display: 'grid', placeItems: 'center',
+          width: '58px',
+          height: '58px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, var(--gold), #77acdc)',
+          border: '4px solid rgba(255, 255, 255, 0.97)',
+          boxShadow: '0 8px 24px rgba(47, 120, 196, 0.35)',
+          display: 'grid',
+          placeItems: 'center',
         }}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M23 19C23 19.55 22.78 20.05 22.41 20.41C22.05 20.78 21.55 21 21 21H3C2.45 21 1.95 20.78 1.59 20.41C1.22 20.05 1 19.55 1 19V8C1 7.45 1.22 6.95 1.59 6.59C1.95 6.22 2.45 6 3 6H7L9 3H15L17 6H21C22.1 6 23 6.9 23 8V19Z" stroke="var(--gold)" strokeWidth="1.7" strokeLinejoin="round" fill="none" />
-            <circle cx="12" cy="13" r="4" stroke="var(--gold)" strokeWidth="1.7" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M23 19C23 19.55 22.78 20.05 22.41 20.41C22.05 20.78 21.55 21 21 21H3C2.45 21 1.95 20.78 1.59 20.41C1.22 20.05 1 19.55 1 19V8C1 7.45 1.22 6.95 1.59 6.59C1.95 6.22 2.45 6 3 6H7L9 3H15L17 6H21C22.1 6 23 6.9 23 8V19Z" stroke="#fff" strokeWidth="1.7" strokeLinejoin="round" fill="none" />
+            <circle cx="12" cy="13" r="4" stroke="#fff" strokeWidth="1.7" />
           </svg>
         </div>
-        <span style={{ fontSize: '10px', fontFamily: 'var(--font-poppins)', color: 'var(--cream-sub)', fontWeight: '500' }}>Capture</span>
+        <span style={{ fontSize: '9px', fontFamily: 'var(--font-poppins)', color: 'var(--cream-sub)', fontWeight: '600', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Capture</span>
       </button>
 
       {/* Voice */}

@@ -11,7 +11,7 @@ interface WelcomeProps {
 const COUPLE = 'Nureen & Nizam'
 const DATE = '07 . 06 . 2026'
 const LOCATION = 'PARIT HJ ALI, BP'
-const EVENT_TYPE = 'Hari Lamaran (Sarong cincin)'
+const EVENT_TYPE = 'Walimatul Urus'
 
 export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemory, onWriteNote }: WelcomeProps) {
   const [mounted, setMounted] = useState(false)
@@ -20,7 +20,7 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
   return (
     <div className="screen" style={{ background: '#f8f1e8', overflow: 'hidden' }}>
       <div className="welcome-cinema-page">
-        
+
         {/* Brand capsule */}
         <header className="welcome-cinema-brand">
           <div className="welcome-cinema-logo">
@@ -34,7 +34,7 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
         </header>
 
         <main className="welcome-cinema-main">
-          
+
           <section className="welcome-cinema-topcopy">
             <div className="welcome-cinema-small">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
             <div className="welcome-cinema-kicker">
@@ -42,15 +42,15 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
               <b>{EVENT_TYPE}</b>
               <span />
             </div>
-            
+
             <h1 className="welcome-cinema-title">{COUPLE}</h1>
-            
+
             <div className="welcome-cinema-meta">
               <span><b>▣</b> {DATE}</span>
               <i />
               <span><b>⌖</b> {LOCATION}</span>
             </div>
-            
+
             <p className="welcome-cinema-note">
               Thank you for being part of this promise<br />
               A promise begins, a memory stays forever
@@ -66,19 +66,19 @@ export default function WelcomeScreen({ onStartCapture, onViewAlbum, onVoiceMemo
 
           <section className="welcome-cinema-bottom">
             <div className="welcome-cinema-actions">
-              
+
               <button className="welcome-cinema-btn main" type="button" onClick={onStartCapture}>
                 <span>📸</span><b>Start Capture</b><em>›</em>
               </button>
-              
+
               <button className="welcome-cinema-btn soft" type="button" onClick={onViewAlbum}>
                 <span>▧</span><b>View Album</b><em>›</em>
               </button>
-              
+
               <button className="welcome-cinema-btn ghost" type="button" onClick={onVoiceMemory}>
                 <span>🎙</span><b>Voice Memory</b><em>›</em>
               </button>
-              
+
               <button className="welcome-cinema-btn ghost" type="button" onClick={onWriteNote}>
                 <span>✍🏻</span><b>Write a Note</b><em>›</em>
               </button>
