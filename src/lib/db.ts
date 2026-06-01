@@ -1,6 +1,32 @@
 import { supabase } from './supabase'
 import { EventConfig, Memory } from '@/types'
 
+// ─── Normalizers (snake_case DB → camelCase aliases for component compat) ────
+
+function normalizeEvent(raw: any): EventConfig {
+  return {
+    ...raw,
+    // camelCase aliases
+    coverPhotoUrl: raw.cover_photo_url,
+    welcomeNote: raw.welcome_note,
+    allowedFilters: raw.allowed_filters,
+    filterText: raw.filter_text,
+    textStyle: raw.text_style,
+    createdAt: raw.created_at,
+  } as EventConfig
+}
+
+function normalizeMemory(raw: any): Memory {
+  return {
+    ...raw,
+    // camelCase aliases
+    guestName: raw.guest_name,
+    fileUrl: raw.file_url,
+    selectedFilter: raw.selected_filter,
+    uploadedAt: raw.uploaded_at,
+  } as Memory
+}
+
 // ─── Events ────────────────────────────────────────────────────────────────
 
 export async function getEventBySlug(slug: string): Promise<EventConfig | null> {
@@ -11,13 +37,16 @@ export async function getEventBySlug(slug: string): Promise<EventConfig | null> 
     .single()
 
   if (error || !data) return null
-  return data as EventConfig
+  return normalizeEvent(data)
 }
 
 export async function getAllEvents(): Promise<EventConfig[]> {
-  const { data, error } = await supabase.from('events').select('*').order('created_at', { ascending: false })
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .order('created_at', { ascending: false })
   if (error) throw error
-  return (data ?? []) as EventConfig[]
+  return (data ?? []).map(normalizeEvent)
 }
 
 export async function upsertEvent(slug: string, payload: Partial<EventConfig>) {
@@ -50,7 +79,7 @@ export async function getMemories(
   const { data, error } = await query
   if (error) throw error
 
-  const memories = (data ?? []) as Memory[]
+  const memories = (data ?? []).map(normalizeMemory)
   return {
     memories,
     nextOffset: offset + memories.length,
@@ -63,10 +92,10 @@ export async function saveMemory(slug: string, data: Partial<Memory>): Promise<M
     .insert({
       event_id: slug,
       type: data.type,
-      guest_name: data.guestName ?? 'Guest',
-      file_url: data.fileUrl ?? null,
+      guest_name: data.guestName ?? data.guest_name ?? 'Guest',
+      file_url: data.fileUrl ?? data.file_url ?? null,
       caption: data.caption ?? '',
-      selected_filter: data.selectedFilter ?? 'none',
+      selected_filter: data.selectedFilter ?? data.selected_filter ?? 'none',
       likes: 0,
       width: data.width ?? null,
       height: data.height ?? null,
@@ -75,7 +104,7 @@ export async function saveMemory(slug: string, data: Partial<Memory>): Promise<M
     .single()
 
   if (error) throw error
-  return inserted as Memory
+  return normalizeMemory(inserted)
 }
 
 export async function likeMemory(memoryId: string): Promise<void> {
