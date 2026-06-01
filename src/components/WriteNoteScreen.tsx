@@ -14,7 +14,7 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
   const [name, setName] = useState(guestName || '')
 
   return (
-    <div className="screen" style={{ background: 'var(--cream-bg) url(/floral-bg.jpg) center/cover', padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px' }}>
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px' }}>
       <button onClick={onClose} style={{ position: 'absolute', top: 'max(env(safe-area-inset-top, 20px), 20px)', left: '20px', width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(8px)' }}>✕</button>
 
       <div style={{ textAlign: 'center', marginTop: '40px' }}>

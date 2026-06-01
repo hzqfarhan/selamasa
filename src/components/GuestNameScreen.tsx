@@ -5,7 +5,7 @@ export default function GuestNameScreen({ onConfirm, onBack }: { onConfirm: (nam
   const [name, setName] = useState('')
 
   return (
-    <div className="screen" style={{ background: 'var(--cream-bg)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div className="glass-card" style={{ width: '100%', maxWidth: '330px', borderRadius: '28px', padding: '30px 20px', textAlign: 'center', position: 'relative' }}>
         <div style={{ position: 'absolute', top: '-24px', left: '50%', transform: 'translateX(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: '#fff', display: 'grid', placeItems: 'center', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', border: '2px solid var(--gold)' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -198,7 +198,7 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
   const isFormValid = audioBlob !== null && name.trim() !== ''
 
   return (
-    <div className="screen" style={{ background: '#070a12', overflow: 'hidden' }}>
+    <div className="screen" style={{ background: 'linear-gradient(rgba(7, 10, 18, 0.88), rgba(7, 10, 18, 0.88)), url(/asset/bg.png) center/cover no-repeat', overflow: 'hidden' }}>
       <div className="voice-page">
         {/* Back navigation */}
         <button className="voice-back" onClick={onClose} type="button" aria-label="Go Back">

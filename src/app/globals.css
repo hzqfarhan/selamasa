@@ -27,7 +27,7 @@
   /* Glass layers */
   --glass-1: rgba(255, 255, 255, 0.04);
   --glass-2: rgba(255, 255, 255, 0.08);
-  --glass-card: rgba(255, 255, 255, 0.62);
+  --glass-card: rgba(255, 255, 255, 0.88);
 
   /* Radii */
   --rs: 8px;
@@ -182,11 +182,11 @@ img, video { user-select: none; -webkit-touch-callout: none; }
   gap: 10px;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.62);
-  border: 1px solid rgba(74, 144, 226, 0.17);
-  box-shadow: 0 14px 30px rgba(42,68,95,0.045), inset 0 1px 0 rgba(255,255,255,0.78);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(74, 144, 226, 0.28);
+  box-shadow: 0 8px 24px rgba(42,68,95,0.08), inset 0 1px 0 rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .welcome-cinema-logo {

@@ -30,7 +30,7 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
   const tabs = ['all', 'photos', 'voice', 'videos', 'notes']
 
   return (
-    <div className="screen" style={{ background: 'linear-gradient(180deg, var(--cream-bg) 0%, var(--cream-bg2) 58%, var(--cream-bg3) 100%)', display: 'flex', flexDirection: 'column', paddingBottom: 'calc(90px + var(--safe-bot))' }}>
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', display: 'flex', flexDirection: 'column', paddingBottom: 'calc(90px + var(--safe-bot))' }}>
 
       {/* Sticky Header */}
       <div style={{ position: 'sticky', top: 0, zIndex: 50, padding: 'max(env(safe-area-inset-top,14px),14px) 20px 10px', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(14px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--gold-border)' }}>

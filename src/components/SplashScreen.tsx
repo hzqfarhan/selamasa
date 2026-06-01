@@ -13,7 +13,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   }, [onComplete])
 
   return (
-    <div className="screen" data-out={out} style={{ background: '#f8f1e8 url(/floral-bg.jpg) center/cover' }}>
+    <div className="screen" data-out={out} style={{ background: 'url(/asset/bg.png) center/cover no-repeat' }}>
       {/* Animated petals */}
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
         {[...Array(5)].map((_, i) => (

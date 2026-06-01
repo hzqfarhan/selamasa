@@ -4,7 +4,7 @@ import BottomNav from './BottomNav'
 
 export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
   return (
-    <div className="screen" style={{ background: 'var(--cream-bg)', paddingBottom: '90px' }}>
+    <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', paddingBottom: '90px' }}>
       <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px 20px' }}>
         
         <div style={{ background: '#0e1522', borderRadius: '35px', padding: '30px 20px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
