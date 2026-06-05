@@ -36,6 +36,24 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
     background: 'radial-gradient(circle at 50% 20%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.85) 45%, transparent 85%), radial-gradient(circle at 50% 85%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.7) 40%, transparent 80%), radial-gradient(circle at 90% 18%, rgba(74,144,226,0.25), transparent 45%), url(/asset/bg.png) center/cover no-repeat',
     paddingBottom: 'calc(90px + var(--safe-bot))'
   }}>
+      <style>{`
+        .gallery-inner { max-width: 1200px; margin: 0 auto; }
+        .gallery-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 9px;
+          padding: 4px 12px;
+        }
+        @media (min-width: 768px) {
+          .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 4px 20px; }
+        }
+        @media (min-width: 1200px) {
+          .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 4px 28px; }
+        }
+        .gallery-voice-list { padding: 4px 12px; }
+        @media (min-width: 768px) { .gallery-voice-list { padding: 4px 20px; } }
+        @media (min-width: 1200px) { .gallery-voice-list { padding: 4px 28px; } }
+      `}</style>
       <FallingLeaves />
 
       {/* Sticky Header */}
@@ -86,7 +104,7 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
 
       {/* Memory Feed */}
       {(tab === 'all' || tab === 'photos' || tab === 'videos') && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '9px', padding: '4px 12px' }}>
+        <div className="gallery-grid">
           {memories.filter(m => {
             if (tab === 'photos') return m.type === 'photo'
             if (tab === 'videos') return m.type === 'video' || m.type === 'boomerang'
@@ -114,7 +132,7 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
 
       {/* Voice Cards */}
       {(tab === 'all' || tab === 'voice') && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 12px' }}>
+        <div className="gallery-voice-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {memories.filter(m => m.type === 'voice').map(m => (
             <div key={m.id} style={{ background: '#fff', borderRadius: '20px', border: '1px solid var(--gold-border)', overflow: 'hidden' }}>
               {/* Header row */}
@@ -139,7 +157,7 @@ export default function GalleryScreen({ slug, coupleName, memories, tab, onChang
 
       {/* Notes Cards */}
       {(tab === 'all' || tab === 'notes') && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 12px' }}>
+        <div className="gallery-voice-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {memories.filter(m => m.type === 'message').map(m => {
             const gName = m.guestName ?? m.guest_name
             const initial = gName.charAt(0).toUpperCase()

@@ -32,8 +32,6 @@ const caveat = Caveat({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1.0,
-  maximumScale: 1.0,
-  userScalable: false,
   themeColor: '#f8f1e8',
 }
 

@@ -252,7 +252,11 @@ export default function VoiceScreen({ onClose, onUpload, guestName, coupleName }
   return (
     <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', overflow: 'hidden', position: 'relative' }}>
       <FallingLeaves />
-      <div className="voice-page" style={{ position: 'relative', zIndex: 2 }}>
+      <style>{`
+        .voice-page { max-width: 640px; margin: 0 auto; position: relative; z-index: 2; }
+        @media (min-width: 768px) { .voice-page { max-width: 760px; } }
+      `}</style>
+      <div className="voice-page">
         {/* Back navigation */}
         <button className="voice-back" onClick={onClose} type="button" aria-label="Go Back">
           ←

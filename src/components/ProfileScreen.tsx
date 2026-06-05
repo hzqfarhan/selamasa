@@ -7,7 +7,7 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
   return (
     <div className="screen" style={{ background: 'url(/asset/bg.png) center/cover no-repeat', paddingBottom: '90px', position: 'relative' }}>
       <FallingLeaves />
-      <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) 20px 20px', position: 'relative', zIndex: 2 }}>
+      <div style={{ padding: 'max(env(safe-area-inset-top, 20px), 20px) clamp(16px,4vw,40px) 20px', position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto' }}>
         
         <div style={{ background: '#fff', borderRadius: '35px', padding: '30px 20px', color: '#111', position: 'relative', overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
