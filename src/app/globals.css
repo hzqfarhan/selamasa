@@ -54,37 +54,73 @@ a { text-decoration: none; color: inherit; }
 button, input, textarea { font: inherit; border: none; background: none; outline: none; }
 button { cursor: pointer; }
 
-/* Desktop Phone Frame Wrapper */
-@media(min-width: 431px) {
+/* ─── App Container Layout — Fully Responsive ──────────────────────────── */
+
+/* Mobile: full screen */
+.app-container {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg);
+}
+
+/* 431–767px: phone-frame mode (small tablet / large phone landscape) */
+@media (min-width: 431px) and (max-width: 767px) {
   body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0eadd;
+    background-color: #e8f0fa;
   }
   .app-container {
     width: 430px;
-    height: 932px;
-    max-height: 100vh;
+    height: min(932px, 100vh);
+    height: min(932px, 100dvh);
     position: relative;
     overflow: hidden;
-    background-color: var(--bg);
-    box-shadow: 0 0 0 1px rgba(198,162,84,.14), 0 30px 90px rgba(0,0,0,.45);
+    box-shadow: 0 0 0 1px rgba(74,144,226,0.18), 0 30px 90px rgba(0,0,0,0.30);
     border-radius: 40px;
   }
 }
-@media(max-width: 430px) {
+
+/* 768px+: tablet / iPad — wider centered card, no phone frame */
+@media (min-width: 768px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: radial-gradient(circle at 60% 20%, rgba(74,144,226,0.12), transparent 55%),
+                radial-gradient(circle at 20% 80%, rgba(47,120,196,0.08), transparent 50%),
+                #e8f2ff;
+    overflow: auto;
+  }
   .app-container {
     width: 100%;
-    height: 100vh;
-    height: 100dvh;
+    max-width: 820px;
+    min-height: 100vh;
+    height: auto;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
   }
 }
 
-/* Landing page scroll override */
+/* 1024px+: laptop / desktop */
+@media (min-width: 1024px) {
+  body { align-items: center; }
+  .app-container {
+    max-width: 960px;
+    min-height: 100vh;
+  }
+}
+
+/* Landing page scroll override (all breakpoints) */
 .app-container.landing-scroll {
   overflow-y: auto !important;
   overflow-x: hidden !important;
@@ -93,6 +129,7 @@ button { cursor: pointer; }
   min-height: 100dvh !important;
 }
 .app-container.landing-scroll::-webkit-scrollbar { display: none; }
+
 
 /* Screen Transition System */
 .screen {
@@ -108,6 +145,17 @@ button { cursor: pointer; }
   pointer-events: none;
   transform: translateY(14px);
   z-index: 1;
+}
+
+/* On tablet/laptop, screens become block-level (no fixed-height parent) */
+@media (min-width: 768px) {
+  .screen {
+    position: relative;
+    inset: unset;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 /* Utilities */
