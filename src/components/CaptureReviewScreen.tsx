@@ -45,7 +45,7 @@ export default function CaptureReviewScreen({ mediaUrl, mediaBlob, type, guestNa
             placeholder={type === 'boomerang' ? "Write a wish..." : "Add a caption..."}
             value={caption}
             onChange={e => setCaption(e.target.value.slice(0, 280))}
-            style={{ width: '100%', height: '80px', background: 'var(--glass-card)', backdropFilter: 'blur(8px)', borderRadius: '16px', padding: '12px', color: '#fff', fontFamily: 'var(--font-dm-sans)', resize: 'none', border: '1px solid var(--gold-border)' }}
+            style={{ width: '100%', height: '80px', background: 'var(--glass-card)', backdropFilter: 'blur(8px)', borderRadius: '16px', padding: '12px', color: '#101726', fontFamily: 'var(--font-dm-sans)', resize: 'none', border: '1px solid var(--gold-border)' }}
           />
           <div style={{ position: 'absolute', bottom: '8px', right: '12px', fontSize: '10px', color: 'rgba(255,255,255,0.6)' }}>
             {caption.length}/280

@@ -21,8 +21,8 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
       <button onClick={onClose} style={{ position: 'absolute', top: 'max(env(safe-area-inset-top, 20px), 20px)', left: '20px', width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(8px)' }}>✕</button>
 
       <div style={{ textAlign: 'center', marginTop: '40px' }}>
-        <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '44px', color: 'var(--cream-text)', margin: 0 }}>{coupleName}</h1>
-        <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--cream-sub)', marginTop: '8px' }}>
+        <h1 style={{ fontFamily: 'var(--font-great-vibes)', fontSize: '44px', color: '#fff', textShadow: '0 2px 8px rgba(0,0,0,0.5)', margin: 0 }}>{coupleName}</h1>
+        <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.9)', textShadow: '0 1px 4px rgba(0,0,0,0.5)', marginTop: '8px' }}>
           ♥ Thank you for celebrating with us ♥
         </p>
       </div>
@@ -71,7 +71,7 @@ export default function WriteNoteScreen({ coupleName, guestName, onClose, onSend
         </button>
       </div>
 
-      <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '11px', color: 'var(--cream-sub)' }}>🔒 Your memory is safe with us</p>
+      <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '11px', color: 'rgba(255,255,255,0.7)' }}>🔒 Your memory is safe with us</p>
       </div>
     </div>
   )

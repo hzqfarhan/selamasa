@@ -54,10 +54,10 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
         </div>
 
         <div style={{ marginTop: '32px' }}>
-          <a href="https://instagram.com/selamasa.my" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: 'linear-gradient(135deg, var(--gold), #1f4a7c)', color: '#fff', borderRadius: '16px', marginBottom: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
+          <a href="https://www.instagram.com/selamasa.my" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: 'linear-gradient(135deg, var(--gold), #1f4a7c)', color: '#fff', borderRadius: '16px', marginBottom: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
             Follow @SelaMasa.my
           </a>
-          <a href="https://wa.me/60123456789" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: '#25D366', color: '#fff', borderRadius: '16px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
+          <a href="https://wa.me/6011123981846" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: '#25D366', color: '#fff', borderRadius: '16px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
             Contact via WhatsApp
           </a>
         </div>
