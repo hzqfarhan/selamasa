@@ -33,20 +33,20 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
           <h2 style={{ fontFamily: 'var(--font-playfair)', fontStyle: 'italic', fontSize: '24px', color: 'var(--cream-text)', marginBottom: '8px' }}>What we do</h2>
           <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: 'var(--cream-sub)', marginBottom: '16px' }}>We provide a modern way to collect photos, videos, and heartfelt messages from your guests.</p>
           
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+          <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '8px', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px', flexShrink: 0 }}>
               <span style={{ fontSize: '16px' }}>📷</span>
               <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>QR Guest Camera</span>
             </div>
-            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px', flexShrink: 0 }}>
               <span style={{ fontSize: '16px' }}>🖼️</span>
               <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Digital Album</span>
             </div>
-            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px', flexShrink: 0 }}>
               <span style={{ fontSize: '16px' }}>🎤</span>
               <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Voice Memory</span>
             </div>
-            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px', flexShrink: 0 }}>
               <span style={{ fontSize: '16px' }}>✨</span>
               <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Bride Dashboard</span>
             </div>

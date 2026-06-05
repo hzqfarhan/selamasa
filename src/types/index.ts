@@ -15,6 +15,7 @@ export interface EventConfig {
   allowed_filters: string[]
   filter_text: { watermark: string; tagline: string }
   text_style: { position: string; size: string; font: string; color: string; showName: boolean }
+  access_code: string | null
   created_at: string
 
   // camelCase aliases for component compatibility

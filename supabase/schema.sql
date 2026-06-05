@@ -21,8 +21,12 @@ CREATE TABLE IF NOT EXISTS events (
   allowed_filters  TEXT[] DEFAULT ARRAY['none'],
   filter_text      JSONB DEFAULT '{"watermark":"","tagline":""}',
   text_style       JSONB DEFAULT '{"position":"bottom","size":"sm","font":"playfair","color":"#ffffff","showName":true}',
+  access_code      TEXT UNIQUE,               -- short code e.g. "NN2026"
   created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- Add access_code if upgrading existing schema
+ALTER TABLE events ADD COLUMN IF NOT EXISTS access_code TEXT UNIQUE;
 
 CREATE TABLE IF NOT EXISTS memories (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -102,7 +106,7 @@ CREATE POLICY "Auth delete from memories"
 
 -- ─── 5. SAMPLE EVENT ─────────────────────────────────────────────────────────
 
-INSERT INTO events (id, bride, groom, event_date, location, type, package, features, allowed_filters, welcome_note)
+INSERT INTO events (id, bride, groom, event_date, location, type, package, features, allowed_filters, welcome_note, access_code)
 VALUES (
   'nureen-nizam-2026',
   'Nureen',
@@ -113,7 +117,8 @@ VALUES (
   'premium',
   '{"boomerang":true,"voice":true,"notes":true,"filters":true}',
   ARRAY['none','floral','gold','vintage','romantic'],
-  'Welcome to our special day! Capture your memories with us.'
+  'Welcome to our special day! Capture your memories with us.',
+  'NN2026'
 )
 ON CONFLICT (id) DO UPDATE SET
   bride           = EXCLUDED.bride,
@@ -124,4 +129,6 @@ ON CONFLICT (id) DO UPDATE SET
   package         = EXCLUDED.package,
   features        = EXCLUDED.features,
   allowed_filters = EXCLUDED.allowed_filters,
-  welcome_note    = EXCLUDED.welcome_note;
+  welcome_note    = EXCLUDED.welcome_note,
+  access_code     = EXCLUDED.access_code;
+

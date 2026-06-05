@@ -40,6 +40,17 @@ export async function getEventBySlug(slug: string): Promise<EventConfig | null> 
   return normalizeEvent(data)
 }
 
+export async function getEventByCode(code: string): Promise<EventConfig | null> {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .ilike('access_code', code.trim())
+    .single()
+
+  if (error || !data) return null
+  return normalizeEvent(data)
+}
+
 export async function getAllEvents(): Promise<EventConfig[]> {
   const { data, error } = await supabase
     .from('events')

@@ -84,6 +84,16 @@ button { cursor: pointer; }
   }
 }
 
+/* Landing page scroll override */
+.app-container.landing-scroll {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+}
+.app-container.landing-scroll::-webkit-scrollbar { display: none; }
+
 /* Screen Transition System */
 .screen {
   position: absolute;
