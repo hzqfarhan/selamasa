@@ -33,31 +33,31 @@ export default function ProfileScreen({ onNavChange, onCaptureClick }: any) {
           <h2 style={{ fontFamily: 'var(--font-playfair)', fontStyle: 'italic', fontSize: '24px', color: 'var(--cream-text)', marginBottom: '8px' }}>What we do</h2>
           <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '13px', color: 'var(--cream-sub)', marginBottom: '16px' }}>We provide a modern way to collect photos, videos, and heartfelt messages from your guests.</p>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div className="glass-card" style={{ padding: '16px', borderRadius: '20px' }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>📷</div>
-              <h3 style={{ fontSize: '14px', fontFamily: 'var(--font-playfair)', fontWeight: 'bold', color: 'var(--cream-text)' }}>QR Guest Camera</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+              <span style={{ fontSize: '16px' }}>📷</span>
+              <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>QR Guest Camera</span>
             </div>
-            <div className="glass-card" style={{ padding: '16px', borderRadius: '20px' }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>🖼️</div>
-              <h3 style={{ fontSize: '14px', fontFamily: 'var(--font-playfair)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Digital Album</h3>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+              <span style={{ fontSize: '16px' }}>🖼️</span>
+              <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Digital Album</span>
             </div>
-            <div className="glass-card" style={{ padding: '16px', borderRadius: '20px' }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>🎤</div>
-              <h3 style={{ fontSize: '14px', fontFamily: 'var(--font-playfair)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Voice Memory</h3>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+              <span style={{ fontSize: '16px' }}>🎤</span>
+              <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Voice Memory</span>
             </div>
-            <div className="glass-card" style={{ padding: '16px', borderRadius: '20px' }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>✨</div>
-              <h3 style={{ fontSize: '14px', fontFamily: 'var(--font-playfair)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Bride Dashboard</h3>
+            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '999px' }}>
+              <span style={{ fontSize: '16px' }}>✨</span>
+              <span style={{ fontSize: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold', color: 'var(--cream-text)' }}>Bride Dashboard</span>
             </div>
           </div>
         </div>
 
         <div style={{ marginTop: '32px' }}>
-          <a href="https://www.instagram.com/selamasa.my" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: 'linear-gradient(135deg, var(--gold), #1f4a7c)', color: '#fff', borderRadius: '16px', marginBottom: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
+          <a href="https://www.instagram.com/selamasa.my" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: 'rgba(225, 48, 108, 0.08)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid rgba(225, 48, 108, 0.25)', color: '#e1306c', borderRadius: '16px', marginBottom: '12px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
             Follow @SelaMasa.my
           </a>
-          <a href="https://wa.me/6011123981846" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: '#25D366', color: '#fff', borderRadius: '16px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
+          <a href="https://wa.me/6011123981846" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '16px', background: 'rgba(37, 211, 102, 0.08)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid rgba(37, 211, 102, 0.25)', color: '#25d366', borderRadius: '16px', fontFamily: 'var(--font-dm-sans)', fontWeight: 'bold' }}>
             Contact via WhatsApp
           </a>
         </div>
